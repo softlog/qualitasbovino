@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sobre">Sobre</string>
+    <string name="configura_es">Configurações</string>
+    <string name="liga_desliga">Liga/Desliga</string>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/txt_id_animal"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="989843" />
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_classificacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:text="C" />
+                <ImageView
+                    android:id="@+id/imgPremium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_premium2" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txt_sexo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="Masculino" />
+
+            <TextView
+                android:id="@+id/txt_dt_nasc"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="CANGACEIRO DO SERTAO" />
+
+            <TextView
+                android:id="@+id/txt_fazenda"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="LIMOSA DO OESTE" />
+
+            <TextView
+                android:id="@+id/txt_avaliado"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="LIMOSA DO OESTE" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_acesso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acessar" />
+
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="br.eti.softlog.certificacao.ImportacaoCertificacaoActivity">
+
+    <ProgressBar
+        android:id="@+id/circularBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="IMPORTAÇÃO CERTIFICAÇÃO"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Large" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="CRIADORES"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_criador"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="Arquivo Criadores"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="MOTIVO DESCARTE"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_mot_descarte"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="PEDIGREE"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_pedigree"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="Pedigree"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="DADOS DO ANIMAL"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+
+                        <TextView
+                            android:id="@+id/txt_animal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="Arquivo dados do animal"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="BANCO DE DADOS ATUAL"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_banco_dados_atual"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Arquivo dados do animal"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="BANCO DE DADOS PARA IMPORTAÇÃO"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_banco_dados_novo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text=""
+                            android:textAppearance="@android:style/TextAppearance.Holo.Small" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="OPÇÕES"
+                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp">
+
+                    <TableRow>
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/chkBackup"
+                            android:layout_margin="16dp"
+                            android:text="Backup do atual Banco de Dados" />
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/chkDelete"
+                            android:layout_margin="16dp"
+                            android:text="Apagar atual Banco de Dados" />
+
+                    </TableRow>
+                </TableLayout>
+
+
+                <com.omega_r.libs.OmegaCenterIconButton
+                    android:id="@+id/btn_importacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:drawableRight="@drawable/ic_import"
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:text="Iniciar Importação"
+                    android:textSize="24dp" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

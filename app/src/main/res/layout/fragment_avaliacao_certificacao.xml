@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AvaliacaoFragment">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- TODO: Update blank fragment layout -->
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/cardview_dark_background"
+                            android:gravity="center"
+                            android:text="CERTIFICAÇÃO"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Large"
+                            android:textColor="@color/cardview_light_background"></TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="CLASSIFICAÇÃO"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="4"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_f"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="F"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_classificacao_p"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textSize="48dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="MOCHO"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_mocho_sim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="SIM"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_mocho_nao"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="NÃO"
+                                android:textSize="48dp" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="MARCAÇÃO"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_marcacao_sim"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="SIM"
+                                android:textSize="48dp" />
+
+                            <TextView
+                                android:id="@+id/txt_marcacao_nao"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:gravity="center"
+                                android:text="NÃO"
+                                android:textSize="48dp" />
+
+                        </LinearLayout>
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp">
+
+                            <TableRow>
+
+                                <TextView
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="PESO"
+                                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                                <TextView
+                                    android:id="@+id/txt_caption_ce"
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="CE"
+                                    android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <EditText
+                                    android:id="@+id/et_peso"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal" />
+
+
+                                <EditText
+                                    android:id="@+id/et_ce"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal" />
+
+
+                            </TableRow>
+                        </TableLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="16dp"
+                            android:text="MOTIVO DESCARTE"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight=".28"
+                            android:background="@xml/background_spinner"
+                            android:orientation="horizontal">
+
+                            <com.thomashaertel.widget.MultiSpinner
+                                android:id="@+id/spnMotivo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:background="@android:color/transparent"
+                                android:gravity="center"
+                                android:spinnerMode="dropdown" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:src="@drawable/drop_spinner" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </ScrollView>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/linearLayout"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
+
+                <TableRow>
+
+                    <com.omega_r.libs.OmegaCenterIconButton
+                        android:id="@+id/btn_avaliar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_avaliar"
+                        android:padding="32dp"
+                        android:text="Alterar" />
+
+                    <com.omega_r.libs.OmegaCenterIconButton
+                        android:id="@+id/btn_excluir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_excluir"
+                        android:padding="32dp"
+                        android:text="Excluir" />
+
+                    <com.omega_r.libs.OmegaCenterIconButton
+                        android:id="@+id/btn_salvar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_salvar"
+                        android:padding="32dp"
+                        android:text="Salvar" />
+
+                    <com.omega_r.libs.OmegaCenterIconButton
+                        android:id="@+id/btn_cancelar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_cancelar"
+                        android:padding="32dp"
+                        android:text="Cancelar" />
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

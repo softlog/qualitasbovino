@@ -1,0 +1,132 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "br.eti.softlog.qualitasbovino"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 19
+        versionName "2.0.6"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            resValue("string", "PORT_NUMBER", "8070")
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    //implementation 'com.android.suport:support-v4:25.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:support-v4:27.1.1'
+
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //implementation 'de.siegmar:fastcsv:1.0.2'
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.blankj:utilcode:1.18.2'
+    implementation 'org.apache.commons:commons-csv:1.5'
+    debugImplementation 'com.idescout.sql:sqlscout-server:4.1'
+    releaseImplementation 'com.idescout.sql:sqlscout-server-noop:4.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.github.angads25:filepicker:1.1.1'
+    //https://github.com/Angads25/android-filepicker
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    //https://github.com/afollestad/material-dialogs/blob/master/README_OLD.md
+    implementation 'com.pixplicity.easyprefs:library:1.9.0'
+    //https://github.com/Pixplicity/EasyPrefs
+    //implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    //https://github.com/arimorty/floatingsearchview
+    //implementation 'com.github.abumoallim:Android-Multi-Select-Dialog:v1.9'
+    //https://github.com/abumoallim/Android-Multi-Select-Dialog
+    implementation 'com.github.Omega-R:OmegaCenterIconButton:0.0.3@aar'
+    //https://github.com/Wrdlbrnft/Searchable-RecyclerView-Demo
+    implementation 'com.github.BlackBoxVision:datetimepicker-edittext:v0.3.3'
+    //https://github.com/BlackBoxVision/datetimepicker-edittext
+    implementation 'com.creativeelites:androidexternalfilewriter:1.4'
+    //https://github.com/PrashamTrivedi/AndroidExternalFileWriter
+    //implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
+    //https://github.com/sephiroth74/Material-BottomNavigation
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+    //https://github.com/orhanobut/dialogplus
+    implementation 'com.yanzhenjie:permission:2.0.0-rc4'
+    implementation 'com.jaredrummler:material-spinner:1.2.5'
+    //https://github.com/jaredrummler/MaterialSpinner
+    //implementation 'com.creativeelites:androidexternalfilewriter:1.4'
+    //https://github.com/PrashamTrivedi/AndroidExternalFileWriter
+    implementation files('libs/jxl.jar')
+
+    //implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    //https://github.com/daimajia/AndroidViewAnimations
+    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+    //https://github.com/amitshekhariitbhu/Android-Debug-Database
+
+    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+    //https://github.com/lecho/hellocharts-android
+
+    implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    //https://github.com/blackfizz/EazeGraph
+
+    implementation 'com.evrencoskun.library:tableview:0.8.8'
+    //https://github.com/evrencoskun/TableView
+
+    implementation 'com.github.huangyanbin:SmartTable:1.8.3'
+    //https://github.com/huangyanbin/smartTable/blob/master/README.en.md
+
+    implementation 'de.codecrafters.tableview:tableview:2.8.0'
+    //https://github.com/ISchwarz23/SortableTableView
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    //https://github.com/PhilJay/MPAndroidChart1
+
+
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    //https://developer.android.com/topic/libraries/support-library/features#multidex
+
+    implementation 'com.carlos.widget:numberkeyboard:1.1.+'
+    //https://github.com/luoheng158/CustomNumberKeyboard
+
+    //implementation 'com.github.santalu:mask-edittext:1.1.1'
+    implementation 'com.github.pinball83:masked-edittext:1.0.4'
+
+    implementation 'com.thomashaertel:multispinner:0.1.1@aar'
+    //https://github.com/thomashaertel/MultiSpinner
+
+    //implementation "org.apache.poi:poi:3.17"
+    //implementation "org.apache.poi:poi-ooxml:3.17"
+}
+
+greendao {
+    schemaVersion 27
+}
+
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    android:background="@color/colorAccent">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_resumo"
+            android:icon="@drawable/ic_resumo"
+            android:title="Resumo" />
+
+        <item
+            android:id="@+id/nav_medidas"
+            android:icon="@drawable/ic_avaliacao"
+            android:title="Medidas" />
+
+        <item
+            android:id="@+id/nav_importar"
+            android:icon="@drawable/ic_import"
+            android:title="Importação" />
+        <item
+            android:id="@+id/nav_exportar"
+            android:icon="@drawable/ic_exportar"
+            android:title="Exportação" />
+
+        <item
+            android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_exit"
+            android:title="Sair" />
+    </group>
+
+
+</menu>

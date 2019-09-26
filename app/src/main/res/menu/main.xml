@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:jaredrummler="com.jaredrummler.materialspinner.MaterialSpinner"
+    xmlns:local="http://schemas.android.com/tools">
+
+    <!--<item-->
+        <!--android:id="@+id/spinner"-->
+        <!--android:title="ActionBar Spinner"-->
+        <!--app:actionViewClass="android.widget.Spinner"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--local:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--app:showAsAction="always" />-->
+
+
+    <item
+        android:id="@+id/spinnerFazenda"
+        android:title="Proprietário"
+        app:actionViewClass="com.jaredrummler.materialspinner.MaterialSpinner"
+        app:showAsAction="always"
+        app:ms_dropdown_height="160dp"/>
+
+    <item
+        android:id="@+id/spinnerSexo"
+        android:title="Sexo"
+        app:actionViewClass="com.jaredrummler.materialspinner.MaterialSpinner"
+        app:showAsAction="always"
+        app:ms_dropdown_height="160dp"/>
+
+    <item
+        android:id="@+id/action_database"
+        android:orderInCategory="100"
+        android:title="Definir Banco Dados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_restore"
+        android:orderInCategory="100"
+        android:title="Restaurar banco de dados"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_bakcup"
+        android:orderInCategory="100"
+        android:title="Backup do banco de dados"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="100"
+        android:title="Configurações"
+        app:showAsAction="never" />
+</menu>

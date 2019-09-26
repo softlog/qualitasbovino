@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.eti.softlog.qualitasbovino">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".AppMain"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="br.eti.softlog.certificacao.ResumoCertificacaoActivity"></activity>
+        <activity android:name="br.eti.softlog.certificacao.ExportacaoCertificacaoActivity" />
+        <activity
+            android:name="br.eti.softlog.certificacao.AnimalMainCertificacaoActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name="br.eti.softlog.certificacao.ImportacaoCertificacaoActivity" />
+        <activity
+            android:name="br.eti.softlog.certificacao.MainCertificacaoActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".MenuActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".SplashActive"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Button1" />
+        <activity
+            android:name=".toolbar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SafraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ImportacaoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FazendaListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AnimaisListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AnimalMainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".OrganogramaActivity" />
+        <activity android:name=".SafraListActivity" />
+        <activity android:name=".AnimalNovoActivity" />
+        <activity android:name=".MedidasListActivity" />
+        <activity
+            android:name=".MedidasActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".ExportacaoActivity" />
+        <activity android:name=".BancoDadosActivity" />
+        <activity android:name=".ResumoActivity" />
+    </application>
+
+</manifest>

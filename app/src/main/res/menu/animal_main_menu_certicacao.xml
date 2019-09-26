@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_animal"
+        android:title="Dados"
+        android:icon="@drawable/ic_animal">
+    </item>
+    <item
+        android:id="@+id/menu_avaliacao"
+        android:title="Certificação"
+        android:icon="@drawable/ic_avaliacao">
+    </item>
+    <item
+        android:id="@+id/menu_observacao"
+        android:title="Observações"
+        android:icon="@drawable/ic_observacao">
+    </item>
+</menu>
