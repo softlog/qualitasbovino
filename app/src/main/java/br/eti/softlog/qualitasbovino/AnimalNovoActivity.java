@@ -2,20 +2,25 @@ package br.eti.softlog.qualitasbovino;
 
 import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Spanned;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -42,6 +47,7 @@ public class AnimalNovoActivity extends AppCompatActivity {
     Manager manager;
     Util util;
 
+    boolean alterar;
     List<MTFDados> animais;
 
     MTFDados animal;
@@ -83,6 +89,7 @@ public class AnimalNovoActivity extends AppCompatActivity {
         app = (AppMain) getApplication();
         manager = new Manager(app);
         util = new Util();
+        alterar = false;
 
         ArrayList<InputFilter> curInputFilters = new ArrayList<InputFilter>(Arrays.asList(etPrefixo.getFilters()));
         curInputFilters.add(0, new AlphaNumericInputFilter());
@@ -131,8 +138,15 @@ public class AnimalNovoActivity extends AppCompatActivity {
                     in.putExtra("id_animal",animal.getId());
                     startActivity(in);
                     finish();
+                } else {
+                    if (alterar){
+                        MTFDados animal = animais.get(0);
+                        //TODO: Trazer dados para a tela
 
+                    }
                 };
+
+
 
 
             }
@@ -201,18 +215,6 @@ public class AnimalNovoActivity extends AppCompatActivity {
         }
 
 
-        searchAnimais(codigo);
-
-
-        if (animais.size() > 0) {
-            layoutCodigo.setErrorEnabled(true);
-            layoutCodigo.setError("Código do animal já existe para este criador.");
-            return false;
-        } else {
-            layoutCodigo.setErrorEnabled(false);
-        }
-
-
         if (dataNascimento.isEmpty()) {
             layoutDataNascimento.setErrorEnabled(true);
             layoutDataNascimento.setError("Informe a data de Nascimento.");
@@ -222,8 +224,40 @@ public class AnimalNovoActivity extends AppCompatActivity {
             layoutDataNascimento.setErrorEnabled(false);
         }
 
+        //Se animal for novo
+        if (!alterar){
+            searchAnimais(codigo);
+            if (animais.size() > 0) {
+                if (animais.size() == 1){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Alerta");
+                    builder.setMessage("Animal já existe, deseja alterar?");
+                    // Set up the buttons
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alterar = true;
+                        }
+                    });
+                    builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
+                    builder.show();
 
+                    return false;
+
+                }
+                layoutCodigo.setErrorEnabled(true);
+                layoutCodigo.setError("Código do animal já existe para este criador.");
+                return false;
+            } else {
+                layoutCodigo.setErrorEnabled(false);
+            }
+        }
 
         Date dDataNascimento;
         String cDataNascimento;
@@ -240,7 +274,10 @@ public class AnimalNovoActivity extends AppCompatActivity {
         Date dtRegistro = new Date();
         String cDtRegisro = util.getDateFormatYMD(dtRegistro);
 
-        animal = manager.addAnimalNovo(codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId);
+        if (alterar)
+            animal = manager.editAnimalNovo(animais.get(0).getId(),codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId);
+        else
+            animal = manager.addAnimalNovo(codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId);
 
         return true;
     }

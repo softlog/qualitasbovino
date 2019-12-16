@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_input_content"
+    android:layout_width="match_parent"
+    android:layout_height="100dp" >
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="31dp"
+        android:layout_marginRight="31dp"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:singleLine="true"
+        android:textColor="#222222"
+        android:textCursorDrawable="@null"
+        android:textSize="42sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/input"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/dialog_bottom_line"/>
+</RelativeLayout>

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import br.eti.softlog.Utils.Util;
 import br.eti.softlog.model.AnimalNovo;
+import br.eti.softlog.model.AnimalNovoDao;
 import br.eti.softlog.model.Criador;
 import br.eti.softlog.model.CriadorDao;
 import br.eti.softlog.model.MTFDados;
@@ -178,9 +179,17 @@ public class Manager {
                                 String idf, String codigo, int safra){
         Pedigree pedigree = findPedigreeByAnimal(id);
 
-        if (pedigree==null) {
+        boolean alterar;
+        alterar = false;
 
-            pedigree = new Pedigree();
+        if (!(pedigree==null) && id < 0)
+            alterar = true;
+
+        //Se pedigree não existe, ou é um animal novo alterado
+        if (pedigree==null || alterar) {
+
+            if (!alterar)
+                pedigree = new Pedigree();
 
             pedigree.setId(id);
             pedigree.setAnimal(animal);
@@ -191,7 +200,11 @@ public class Manager {
             pedigree.setCriadorId(codigoToId(codigo));
             pedigree.setSafra(safra);
 
-            app.getDaoSession().insert(pedigree);
+            if (alterar)
+                app.getDaoSession().update(pedigree);
+            else
+                app.getDaoSession().insert(pedigree);
+
 
         }
 
@@ -223,12 +236,27 @@ public class Manager {
 
 
         Pedigree pedigree = findPedigreeByAnimal(animal);
-        MTFDados dados = findMTFDadosByIdfCriador(pedigree.getIdf(),codigoToId(criador));
+
+        MTFDados dados;
+
+        boolean alterar;
+        alterar = false;
+
+
+        if (animal > 0)
+            dados = findMTFDadosByIdfCriador(pedigree.getIdf(),codigoToId(criador));
+        else
+            dados = findMTFDadosByAnimal(animal);
+
+        if (!(dados==null) && animal < 0)
+            alterar =  true;
 
         //Log.d("Importando",pedigree.getIdf());
 
-        if (dados==null) {
-            dados = new MTFDados();
+        if (dados==null || alterar) {
+
+            if (!alterar)
+                dados = new MTFDados();
 
             dados.setId(animal);
             dados.setCriadorId(codigoToId(criador));
@@ -280,8 +308,11 @@ public class Manager {
 //                dados.setCodigoIdf(Long.valueOf(partes[0]));
 //            }
 
+            if (alterar)
+                app.getDaoSession().update(dados);
+            else
+                app.getDaoSession().insert(dados);
 
-            app.getDaoSession().insert(dados);
         } else {
             dados.setIdf2(util.trataIdf(pedigree.getIdf()));
             app.getDaoSession().update(dados);
@@ -520,6 +551,9 @@ public class Manager {
 
         addMedicao(19,"VENDA","VEN",0,1,"A",
                 0,0,0,0,0, false);
+
+        addMedicao(20,"LOTE","LOT",0,1,"A",
+                0,0,0,0,0, false);
     }
 
     public MedicoesAnimal findMedicoesAnimalByAnimalIdMedida(Long animal, Long medicaoId) {
@@ -561,6 +595,8 @@ public class Manager {
                 medicoesAnimal.setAnimal(idAnimal);
                 medicoesAnimal.setMedicaoId(medicoes.get(i).getId());
                 medicoesAnimal.setDescarte(false);
+
+
                 app.getDaoSession().insert(medicoesAnimal);
             }
         }
@@ -589,6 +625,41 @@ public class Manager {
         int safra = Prefs.getInt("safra",Integer.valueOf(0));
         Long id;
         id = animalNovo.getId() * -1;
+
+        addPedigree(id,id,Long.valueOf(0),Long.valueOf(0),nome,idf,IdToCodigo(criadorId), safra);
+
+        //Inserir na tabela de dados
+        MTFDados animal = addMTFDados(IdToCodigo(criadorId),IdToCodigo(criadorId),id,Long.valueOf(0),Long.valueOf(0),
+                dataNascimento,sexo,"","","",0.0,"",0.0,
+                "",0.0,"",0.0,"",0.0,"",
+                0.0,"",0.0,"",0.0,"",0.0,0.0,
+                0.0,0.0,0.0,0.0);
+
+        animal.setImportado(0);
+        app.getDaoSession().update(animal);
+
+        return animal;
+    };
+
+    public MTFDados editAnimalNovo(Long id, String idf, String nome, String sexo, String dataNascimento,
+                                  String dataRegistro, Long proprietarioId, Long criadorId){
+
+        AnimalNovo animalNovo = app.getDaoSession().getAnimalNovoDao().queryBuilder()
+                                    .where(AnimalNovoDao.Properties.Id.eq(id * -1)).unique();
+
+        animalNovo.setIdf(idf);
+        animalNovo.setNome(nome);
+        animalNovo.setSexo(sexo);
+        animalNovo.setDataNascimento(dataNascimento);
+        animalNovo.setDataRegistro(dataRegistro);
+        animalNovo.setProprietarioId(proprietarioId);
+        animalNovo.setCriadorId(criadorId);
+
+        app.getDaoSession().update(animalNovo);
+
+        //Inserir na tabela de pedigree
+        int safra = Prefs.getInt("safra",Integer.valueOf(0));
+
 
         addPedigree(id,id,Long.valueOf(0),Long.valueOf(0),nome,idf,IdToCodigo(criadorId), safra);
 

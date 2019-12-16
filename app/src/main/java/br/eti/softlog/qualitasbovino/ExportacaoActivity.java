@@ -211,7 +211,13 @@ public class ExportacaoActivity extends AppCompatActivity {
                                 continue;
                             }
 
+                            //Ignorar se for venda
                             if (medidas.get(j).getMedicaoId() == 321524) {
+                                continue;
+                            }
+
+                            //Ignorar se for Lote
+                            if (medidas.get(j).getMedicaoId() == 222530){
                                 continue;
                             }
 
@@ -260,16 +266,6 @@ public class ExportacaoActivity extends AppCompatActivity {
 
                 ////////////////////////////////////////////////////////////////////////////////////
                 /// Gerar Arquivo CSV das avaliacoes
-//                avaliacaoJxls = new AvaliacaoJxls(animais,fileAvaliacaoCsv);
-//
-//                //Testando
-//                try {
-//                    avaliacaoJxls.exportaAvaliacaoFuncional();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } catch (WriteException e) {
-//                    e.printStackTrace();
-//                }
 
 
                 List<String> headerAval = new ArrayList<>();
@@ -294,6 +290,7 @@ public class ExportacaoActivity extends AppCompatActivity {
                 headerAval.add("Testículos");
                 headerAval.add("Racial");
                 headerAval.add("Descarte");
+                headerAval.add("Lote");
 
                 List<List<String>> contentsAval = new ArrayList<>();
 
@@ -318,6 +315,7 @@ public class ExportacaoActivity extends AppCompatActivity {
 
                         if (medida.getAbrev().equals("VEN"))
                             continue;
+
 
                         MedicoesAnimal m = app.getDaoSession()
                                 .getMedicoesAnimalDao()

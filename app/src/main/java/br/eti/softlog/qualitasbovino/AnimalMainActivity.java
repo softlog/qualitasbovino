@@ -133,10 +133,6 @@ public class AnimalMainActivity extends AppCompatActivity implements BottomNavig
                 selectFragment = AnimalFragment.newInstance();
                 break;
             }
-            case R.id.menu_pedigree: {
-                selectFragment = PedigreeFragment.newInstance();
-                break;
-            }
             case R.id.menu_observacao: {
                 selectFragment = ObservacaoFragment.newInstance();
                 break;
@@ -182,11 +178,15 @@ public class AnimalMainActivity extends AppCompatActivity implements BottomNavig
         Boolean iniciou;
         iniciou = false;
         for (int i = 0; i<animal.getMedicoesAnimals().size();i++){
+            if (animal.getMedicoesAnimals().get(i).getMedicaoId() == 222530) {
+                continue;
+            }
             if (animal.getMedicoesAnimals().get(i).getValor() != null){
                 iniciou = true;
                 break;
             }
         }
+
         if (isEdit && iniciou) {
             new MaterialDialog.Builder(AnimalMainActivity.this)
                     .title("Mensagem")

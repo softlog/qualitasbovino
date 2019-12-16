@@ -268,6 +268,9 @@ public class MTFDados {
     @Property(nameInDb = "ceip")
     String ceip;
 
+    @Property(nameInDb = "lote")
+    String lote;
+
     @ToMany(referencedJoinProperty = "animalId")
     List<MotivoDescarteAnimais> motivoDescarteAnimais;
 
@@ -279,7 +282,7 @@ public class MTFDados {
     @Generated(hash = 1637768460)
     private transient MTFDadosDao myDao;
 
-    @Generated(hash = 1512157274)
+    @Generated(hash = 1806032701)
     public MTFDados(Long id, Long criadorId, Long proprietarioId, Long animal, Long pai, Long mae,
             String dataNasc, String sexo, String situRepro, String livro, String raNasc, Double rPNasc,
             String raDesm, Double iPDesm, String dPDesm, Double rPDesm, String ra365, Double iP365, String dP365,
@@ -291,7 +294,7 @@ public class MTFDados {
             Double depSob, Double percSob, Double pSob, Double depCE, Double percCE, Double rcCE, Double ce,
             Double dep_musc, Double perc_musc, Double musc, Double indQlt, Double percQlt, Double rank_qlt,
             Long marcacao, Long classificacao, String classificacaoFP, Long mocho, Double p_marcacao,
-            Double ce_marcacao, Long motDescId, String ceip) {
+            Double ce_marcacao, Long motDescId, String ceip, String lote) {
         this.id = id;
         this.criadorId = criadorId;
         this.proprietarioId = proprietarioId;
@@ -363,6 +366,7 @@ public class MTFDados {
         this.ce_marcacao = ce_marcacao;
         this.motDescId = motDescId;
         this.ceip = ceip;
+        this.lote = lote;
     }
 
     @Generated(hash = 387116617)
@@ -464,6 +468,68 @@ public class MTFDados {
 
         return descarte;
     }
+
+
+    public boolean isDescarte(){
+
+        boolean descarte;
+        descarte = false;
+
+        for (int i=0; i<this.getMedicoesAnimals().size()-1; i++){
+            if (this.getMedicoesAnimals().get(i).getDescarte()){
+                descarte = true;
+                break;
+            }
+        }
+        return descarte;
+    }
+
+    public boolean isVenda(){
+
+        boolean venda;
+        venda = false;
+
+        for (int i=this.getMedicoesAnimals().size()-1;i>=0; i--){
+            if (this.getMedicoesAnimals().get(i).getMedicaoId() == 321524){
+                if (this.getMedicoesAnimals().get(i).getValor() == Long.valueOf(1)){
+                    venda = true;
+                }
+                else {
+                    venda = false;
+                }
+                break;
+            }
+        }
+        return venda;
+    }
+
+
+    public boolean isOnlyVenda(){
+
+        boolean soVenda;
+        boolean venda;
+        int qtAvaliado;
+
+        venda = false;
+        qtAvaliado = 0;
+
+        for (int i = 0; i < this.getMedicoesAnimals().size(); i++) {
+            if (!(this.getMedicoesAnimals().get(i).getValor()== null)){
+                qtAvaliado++;
+                if (this.getMedicoesAnimals().get(i).getMedicaoId() == 321524)
+                    venda = true;
+            }
+        }
+
+        if (venda && qtAvaliado == 2){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 
     public Long getId() {
         return this.id;
@@ -1298,6 +1364,14 @@ public class MTFDados {
     @Generated(hash = 1466207610)
     public synchronized void resetMotivoDescarteAnimais() {
         motivoDescarteAnimais = null;
+    }
+
+    public String getLote() {
+        return this.lote;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
     }
 
     /** called by internal mechanisms, do not call yourself. */

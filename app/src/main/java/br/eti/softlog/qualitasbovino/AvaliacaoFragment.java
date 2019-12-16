@@ -1,20 +1,24 @@
 package br.eti.softlog.qualitasbovino;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +37,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import br.eti.softlog.Utils.InputDialog;
 import br.eti.softlog.model.MTFDados;
 import br.eti.softlog.model.MedicoesAnimal;
+import br.eti.softlog.model.MedicoesAnimalDao;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,13 +60,16 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
     AvaliacaoAdapter avaliacaoAdapter;
     public MTFDados animal;
     public List<MedicoesAnimal> medicoesAnimal;
+    public List<MedicoesAnimal> medicoes;
     public ArrayAdapter<String> adapter;
+
 
     public OmegaCenterIconButton btnSalvar;
     public OmegaCenterIconButton btnAvaliar;
     public OmegaCenterIconButton btnExcluir;
     public OmegaCenterIconButton btnCancelar;
 
+    public Long lote;
     public int positionDescarte;
     public boolean avaliado;
 
@@ -124,8 +133,7 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(activity, DividerItemDecoration.HORIZONTAL));
 
-        recyclerView.setAdapter(avaliacaoAdapter);
-        avaliacaoAdapter.setClickListener(this);
+
 
         //((AnimalMainActivity) activity).isEdit = Prefs.getBoolean("isEdit", false);
         btnAvaliar = view.findViewById(R.id.btn_avaliar);
@@ -137,10 +145,25 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
         if (!animal.getAvaliado()){
             ((AnimalMainActivity) activity).isEdit = true;
             Prefs.putBoolean("isEdit", ((AnimalMainActivity) activity).isEdit);
+
+            //Se tiver informação de lote, trazer definido
+            for (int i=(medicoesAnimal.size()-1); i>=0; i--){
+                if (medicoesAnimal.get(i).getMedicaoId() == 222530) {
+                    String lote;
+                    lote = Prefs.getString("lote","");
+                    if (!lote.isEmpty()){
+                        medicoesAnimal.get(i).setValor(Long.valueOf(lote));
+                    }
+                }
+            }
+
         } else {
             ((AnimalMainActivity) activity).isEdit = false;
             Prefs.putBoolean("isEdit", ((AnimalMainActivity) activity).isEdit);
         }
+
+        recyclerView.setAdapter(avaliacaoAdapter);
+        avaliacaoAdapter.setClickListener(this);
 
         configBtn();
 
@@ -224,12 +247,16 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
 
                 avaliado = true;
                 Boolean vendaAvaliado;
+                Boolean vendaComNota;
                 vendaAvaliado = false;
 
                 int qtAvaliado;
                 qtAvaliado = 0;
 
                 for (int i = 0; i < medicoesAnimal.size(); i++) {
+                    if (medicoesAnimal.get(i).getMedicaoId() == 222530)
+                        continue;
+
                     if (medicoesAnimal.get(i).getValor() == null
                             && medicoesAnimal.get(i).getMedicoes().getObrigatorio()) {
                         avaliado = false;
@@ -242,9 +269,21 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                 }
 
                 //Log.d("Qt Avaliado ",String.valueOf(qtAvaliado));
+                vendaComNota = true;
                 if (!avaliado)
                     if (qtAvaliado==2 && vendaAvaliado)
+                        vendaComNota = false;
                         avaliado = true;
+
+
+                if (avaliado && vendaAvaliado && vendaComNota && !animal.isDescarte()){
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Não foi possível salvar, animal sem defeito não pode ser vendido.")
+                            .positiveText("OK")
+                            .show();
+                    return ;
+                }
 
                 //Log.d("Medicao ",String.valueOf(medicoesAnimal.get(1).getMedicaoId()));
                 //Log.d("Quantidade ",String.valueOf(medicoesAnimal.size()));
@@ -305,6 +344,8 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
             return;
         }
 
+
+
         final TextView txtStatus;
         final TextView txtValor;
 
@@ -323,6 +364,71 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
 
         final MedicoesAnimal medicaoAnimal = avaliacaoAdapter.medicoesAnimais.get(position);
 
+        //Controle de Lote Avaliacao
+        if (medicaoAnimal.getMedicaoId() == 222530){
+            String cLote;
+            cLote = "";
+            if (medicaoAnimal.getValor() != null)
+                cLote = String.valueOf(medicaoAnimal.getValor());
+
+            InputDialog.Builder builder = new InputDialog.Builder(activity);
+
+            builder.setTitle("Lote Avaliação")
+            .setInputDefaultText(cLote)
+            .setInputMaxWords(3)
+            .setInputHint("Digite o lote da avaliação")
+            .setInputType(InputType.TYPE_CLASS_NUMBER)
+            .setPositiveButton("Ok", new InputDialog.ButtonActionListener() {
+                @Override
+                public void onClick(CharSequence inputText) {
+
+                    if (inputText.length() > 0){
+                        medicaoAnimal.setValor(Long.valueOf(String.valueOf(inputText)));
+                        Date date = new Date();
+                        String cDate = ((AnimalMainActivity) activity).util.getDateTimeFormatYMD(date);
+                        medicaoAnimal.setDataMedicao(cDate);
+                        animal.setLote(String.valueOf(inputText));
+
+                        Prefs.putString("lote",String.valueOf(inputText));
+
+                    } else {
+                        medicaoAnimal.setValor(null);
+                        animal.setLote(null);
+                        Prefs.putString("lote",null);
+                    }
+                    avaliacaoAdapter.notifyItemChanged(position);
+                    avaliacaoAdapter.notifyItemChanged(positionDescarte);
+
+                }
+            })
+            .setNegativeButton("Cancelar", new InputDialog.ButtonActionListener() {
+                @Override
+                public void onClick(CharSequence inputText) {
+                    // TODO
+                }
+            })
+            .setOnCancelListener(new InputDialog.OnCancelListener() {
+                @Override
+                public void onCancel(CharSequence inputText) {
+                    // TODO
+                }
+            })
+            .interceptButtonAction(new InputDialog.ButtonActionIntercepter() {
+                @Override
+                public boolean onInterceptButtonAction(int whichButton, CharSequence inputText) {
+                    if ("/sdcard/my".equals(inputText) && whichButton == DialogInterface.BUTTON_POSITIVE) {
+
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            builder.show();
+
+            return ;
+        }
+
         if (medicaoAnimal.getMedicaoId() == 141529) {
             MaterialDialog dialog = new MaterialDialog.Builder(activity)
                     .title("Mensagem")
@@ -331,6 +437,42 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                     .show();
             return;
         }
+
+        //Nao permitir colocar animal sem defeito pra venda
+//        if (medicaoAnimal.getMedicaoId() == 321524) {
+//
+//            medicoes = ((AnimalMainActivity) activity).app.getDaoSession().getMedicoesAnimalDao()
+//                    .queryBuilder()
+//                    .where(MedicoesAnimalDao.Properties.MedicaoId.eq(141529))
+//                    .where(MedicoesAnimalDao.Properties.Valor.eq(1))
+//                    .list();
+//
+//            if (medicoes.size()>0){
+//                MaterialDialog dialog = new MaterialDialog.Builder(activity)
+//                        .title("Mensagem")
+//                        .content("Animal não pode ser colocado à venda.")
+//                        .positiveText("Ok")
+//                        .show();
+//                return;
+//            }
+//        } else { //Nao permitir alterar animal colocado a venda
+//            medicoes = ((AnimalMainActivity) activity).app.getDaoSession().getMedicoesAnimalDao()
+//                    .queryBuilder()
+//                    .where(MedicoesAnimalDao.Properties.MedicaoId.eq(321524))
+//                    .where(MedicoesAnimalDao.Properties.Valor.eq(1))
+//                    .list();
+//
+//            if (medicoes.size()>0){
+//                MaterialDialog dialog = new MaterialDialog.Builder(activity)
+//                        .title("Mensagem")
+//                        .content("Animal foi colocado à venda, não é possível alterar medição.")
+//                        .positiveText("Ok")
+//                        .show();
+//                return;
+//            }
+//
+//
+//        }
 
         maiorValor = medicaoAnimal.getMedicoes().getMaiorValor();
         menorValor = medicaoAnimal.getMedicoes().getMenorValor();

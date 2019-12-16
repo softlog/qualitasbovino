@@ -58,6 +58,7 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
         migrations.add(new MigrationV24());
         migrations.add(new MigrationV26());
         migrations.add(new MigrationV27());
+        migrations.add(new MigrationV28());
 
         // Sorting just to be safe, in case other people add migrations in the wrong order.
 //        Comparator<Migration> migrationComparator = new Comparator<Migration>() {
@@ -244,6 +245,20 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
         }
     }
 
+    private static class MigrationV28 implements Migration {
+
+        @Override
+        public Integer getVersion() {
+            return 28;
+        }
+
+        @Override
+        public void runMigration(Database db) {
+
+            db.execSQL("ALTER TABLE " + MTFDadosDao.TABLENAME + " ADD COLUMN lote STRING;");
+
+        }
+    }
 
     private interface Migration {
         Integer getVersion();

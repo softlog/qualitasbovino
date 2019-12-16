@@ -6,8 +6,8 @@ android {
         applicationId "br.eti.softlog.qualitasbovino"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 19
-        versionName "2.0.6"
+        versionCode 20
+        versionName "2.0.7"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -18,7 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            resValue("string", "PORT_NUMBER", "8070")
+            resValue("string", "PORT_NUMBER", "8099")
         }
     }
     lintOptions {
@@ -108,7 +108,7 @@ dependencies {
 
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
-    //https://developer.android.com/topic/libraries/support-library/features#multidex
+    //https://github.com/amitshekhariitbhu/Android-Debug-Database
 
     implementation 'com.carlos.widget:numberkeyboard:1.1.+'
     //https://github.com/luoheng158/CustomNumberKeyboard
@@ -124,7 +124,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 27
+    schemaVersion 28
 }
 
 //apply plugin: 'kotlin-android'

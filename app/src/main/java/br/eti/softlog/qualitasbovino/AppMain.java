@@ -12,6 +12,8 @@ import android.util.Log;
 import com.blankj.utilcode.util.Utils;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import org.greenrobot.greendao.database.Database;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +43,8 @@ public class AppMain extends Application {
     private DaoSession mDaoSession;
     private DaoSession mDaoSessionCentral;
 
+    private SQLiteDatabase db;
+
     String nameDb;
 
     public AppMain getInstance() {
@@ -65,12 +69,16 @@ public class AppMain extends Application {
 
     }
 
+    public SQLiteDatabase getDb(){
+        return db;
+    }
 
     public void setBD(String nome_bd) {
 
         //helper = new DaoMaster.DevOpenHelper(this, nome_bd + ".db", null);
         helper = new DatabaseUpgradeHelper(getApplicationContext(),nome_bd + ".db");
         SQLiteDatabase db = helper.getWritableDatabase();
+        this.db = db;
         DaoMaster daoMaster = new DaoMaster(db);
         mDaoSession = daoMaster.newSession();
         nameDb = nome_bd;
@@ -96,6 +104,8 @@ public class AppMain extends Application {
             mDaoSession.update(dados.get(i));
         }
     }
+
+
 
     public boolean backupBD(Context context, String nome_bd) {
 

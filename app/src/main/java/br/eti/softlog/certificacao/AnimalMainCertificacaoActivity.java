@@ -167,10 +167,6 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
                 selectFragment = AnimalCertificacaoFragment.newInstance();
                 break;
             }
-            case R.id.menu_pedigree: {
-                selectFragment = PedigreeFragment.newInstance();
-                break;
-            }
             case R.id.menu_observacao: {
                 selectFragment = ObservacaoFragment.newInstance();
                 break;

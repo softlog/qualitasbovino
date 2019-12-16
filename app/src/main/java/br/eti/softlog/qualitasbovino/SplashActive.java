@@ -42,8 +42,10 @@ public class SplashActive extends AppCompatActivity {
                 } else if (tipoOperacao==1) {
                     i = new Intent(SplashActive.this,MainActivity.class);
                     String bd = Prefs.getString("bancoDadosCurrent","base_teste");
+                    String lote = Prefs.getString("lote","");
                     Prefs.clear();
                     Prefs.putString("bancoDadosCurrent",bd);
+                    Prefs.putString("lote",lote);
                     Prefs.putInt("tipo_operacao",1);
                 } else {
                     i = new Intent(SplashActive.this, MainCertificacaoActivity.class);

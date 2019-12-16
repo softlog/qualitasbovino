@@ -115,7 +115,10 @@ public class AvaliacaoAdapter extends RecyclerView.Adapter<AvaliacaoAdapter.Aval
             if (medicaoAnimal.getDescarte()){
                 holder.txtStatus.setBackgroundColor(Color.RED);
             }
+        }
 
+        if (medicaoAnimal.getMedicoes().getId()==222530){
+            holder.txtStatus.setBackgroundColor(Color.GRAY);
         }
 
     }
