@@ -92,18 +92,19 @@ public class AnimalAdapter extends Adapter<AnimalViewHolder> {
                     }
                     holder.txtSexo.setText(animal.getSexoDesc());
                     int i = 0;
-                    List<MedicoesAnimal> medicoesAnimal = AnimalAdapter.this.app.getDaoSession().getMedicoesAnimalDao().queryBuilder().where(Properties.Animal.eq(animal.getAnimal()), new WhereCondition[0]).list();
+                    List<MedicoesAnimal> medicoesAnimal = AnimalAdapter.this.app.getDaoSession()
+                            .getMedicoesAnimalDao().queryBuilder()
+                            .where(Properties.Animal.eq(animal.getAnimal()), new WhereCondition[0])
+                            .list();
+
                     AnimalAdapter.this.app.getDaoSession().update(animal);
-                    while (true) {
-                        int i2 = i;
-                        if (i2 < medicoesAnimal.size()) {
-                            AnimalAdapter.this.app.getDaoSession().delete(medicoesAnimal.get(i2));
-                            i = i2 + 1;
-                        } else {
-                            Toast.makeText(AnimalAdapter.this.mContext, "Sexo do animal foi alterado.", 1).show();
-                            return;
-                        }
+
+                    for (MedicoesAnimal medicao:medicoesAnimal){
+                        AnimalAdapter.this.app.getDaoSession().delete(medicao);
                     }
+                    Toast.makeText(AnimalAdapter.this.mContext, "Sexo do animal foi alterado.",
+                            Toast.LENGTH_LONG).show();
+                    return ;
                 }
             }
         });

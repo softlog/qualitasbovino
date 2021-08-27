@@ -2,6 +2,7 @@ package br.eti.softlog.qualitasbovino;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +64,13 @@ public class AnimalMainActivity extends AppCompatActivity implements BottomNavig
     @BindView(R.id.txt_livro)
     TextView txt_livro;
 
+    @BindView(R.id.txt_avaliacao_ordem)
+    TextView txtAvaliacao;
+
+    @BindView(R.id.img_qsp)
+    ImageView imgQsp;
+
+    public int ordemAvaliacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +130,32 @@ public class AnimalMainActivity extends AppCompatActivity implements BottomNavig
                 onSupportNavigateUp();
             }
         });
+
+
+        ordemAvaliacao = animal.getOrdem_avaliacao();
+
+        if (ordemAvaliacao > 0){
+            txtAvaliacao.setText("Avaliação Número: " + String.valueOf(ordemAvaliacao));
+        } else {
+            String qry = "SELECT count(*) as qt FROM " +
+                    "mtf_dados WHERE avaliado = 1 " +
+                    "AND sexo = '" + animal.getSexo() + "'" +
+                    "AND criador_id = " + animal.getCriadorId();
+
+            Cursor cursorOrdem = app.getDb().rawQuery(qry,null);
+
+            while (cursorOrdem.moveToNext()){
+                ordemAvaliacao = cursorOrdem.getInt(0) + 1;
+            }
+            txtAvaliacao.setText("Avaliação Número: " + String.valueOf(ordemAvaliacao));
+        }
+
+
+        if (animal.getIdMae() != 1){
+            imgQsp.setVisibility(View.INVISIBLE);
+            imgQsp.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -181,7 +216,7 @@ public class AnimalMainActivity extends AppCompatActivity implements BottomNavig
             if (animal.getMedicoesAnimals().get(i).getMedicaoId() == 222530) {
                 continue;
             }
-            if (animal.getMedicoesAnimals().get(i).getValor() != null){
+            if (animal.getMedicoesAnimals().get(i).getValor() != null) {
                 iniciou = true;
                 break;
             }

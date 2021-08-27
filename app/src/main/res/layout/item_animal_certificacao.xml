@@ -37,6 +37,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_premium2" />
+
+                <ImageView
+                    android:id="@+id/img_qsp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/qsp" />
             </LinearLayout>
 
 
@@ -55,7 +62,7 @@
                 android:text="CANGACEIRO DO SERTAO" />
 
             <TextView
-                android:id="@+id/txt_fazenda"
+                android:id="@+id/txt_marcado"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"

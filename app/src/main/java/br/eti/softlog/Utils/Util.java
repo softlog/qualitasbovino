@@ -81,6 +81,15 @@ public final class Util {
     }
 
 
+    public static  String getDateFormatArquivo(Date data) {
+
+        SimpleDateFormat formato = new SimpleDateFormat();
+        formato.applyPattern("yyyyMMdd");
+
+        String dataFormatada = formato.format(data);
+        return dataFormatada;
+    }
+
 
     public static  String getDateTimeFormatYMD(Date data) {
 
@@ -132,6 +141,7 @@ public final class Util {
         while (sb.length() < tamanho) {
             sb.insert(0, '0');
         }
+
         return sb.toString();
     }
 
@@ -145,6 +155,24 @@ public final class Util {
         for (int i = 0; i < entrada.length(); i++)
         {
             char l = entrada.charAt(i);
+            if ((l >= '0') && (l <= '9')) {
+                sb.append(l);
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String ltrim(String entrada, char caracter)
+    {
+        if (entrada == null) {
+            return null;
+        }
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < entrada.length(); i++)
+        {
+            char l = entrada.charAt(i);
+
             if ((l >= '0') && (l <= '9')) {
                 sb.append(l);
             }
@@ -260,6 +288,83 @@ public final class Util {
         //idfNum.replaceFirst("^0+(?!$)", "");
         //idfTratado = String.format("%1$" + 6 + "s", idfAlfa)
           //          + String.format("%1$" + 8 + "s", idfNum).replace(" ", "0");
+
+        //idfTratado = idfAlfa
+        //        + String.format("%1$" + 8 + "s", idfNum).replace(" ", "0");
+
+        return idfTratado.trim();
+
+    }
+
+    public String trataIdf_2(String idf){
+        String idfFlag;
+        String idfAlfa;
+        String idfNum;
+        int tamanho;
+
+        idfFlag = "";
+        idfAlfa = "";
+        idfNum = "";
+
+        String idfTratado;
+
+        idfTratado = "";
+
+        if (idf == null)
+            return "";
+
+        if (idf.isEmpty())
+            return "";
+
+        for (int i=0;i<idf.length();i++){
+            char chr = idf.charAt(i);
+
+            int temp;
+            temp = 0;
+            switch (chr){
+                case 42:
+                    temp = 1;
+                case 45:
+                    temp = 1;
+                case 64:
+                    temp = 1;
+                default:
+                    temp = 0;
+            }
+            if (temp==1)
+                idfFlag = idfFlag + idf.substring(i,i+1);
+
+            if ( (chr>=65 && chr<=90) || (chr>=97 && chr <=122) )
+                temp = 1;
+            else
+                temp = 0;
+
+            if (temp==1)
+                idfAlfa = idfAlfa + idf.substring(i,i+1);
+
+            if (chr>=48 && chr<=57)
+                temp = 1;
+            else
+                temp = 0;
+
+            if (temp==1)
+                idfNum = idfNum + idf.substring(i,i+1);
+
+        }
+
+        if (idfFlag.length()>2)
+            idfFlag = idfFlag.substring(idfFlag.length()-2,idfFlag.length());
+
+        if (idfAlfa.length()>6)
+            idfAlfa = idfAlfa.substring(idfAlfa.length()-6,6);
+
+        if (idfNum.length()>8)
+            idfNum = idfNum.substring(0,8);
+
+        idfTratado = idfAlfa + " " +  Integer.valueOf(idfNum).toString();
+        //idfNum.replaceFirst("^0+(?!$)", "");
+        //idfTratado = String.format("%1$" + 6 + "s", idfAlfa)
+        //          + String.format("%1$" + 8 + "s", idfNum).replace(" ", "0");
 
         //idfTratado = idfAlfa
         //        + String.format("%1$" + 8 + "s", idfNum).replace(" ", "0");

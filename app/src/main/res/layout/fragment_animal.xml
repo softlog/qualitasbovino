@@ -59,13 +59,13 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Regime Alimentar"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
 
                                 <TextView
                                     android:id="@+id/ra_nasc"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -73,12 +73,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Peso Real"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_p_nasc"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
 
@@ -99,12 +99,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Regime Alimentar"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/ra_desm"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -113,12 +113,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade da pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_p_desm"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -126,12 +126,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Peso Real"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_p_desm"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -139,12 +139,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Data Pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/d_p_desm"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
                     </LinearLayout>
@@ -173,12 +173,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Regime Alimentar"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/ra_365"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -187,12 +187,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade da pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_p_365"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -200,12 +200,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Peso Real"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_p_365"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -213,12 +213,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Data Pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/d_p_365"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
 
@@ -239,12 +239,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Regime Alimentar"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/ra_450"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -253,12 +253,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade da pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_p_450"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -266,12 +266,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Peso Real"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_p_450"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -280,12 +280,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Data Pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/d_p_450"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
                     </LinearLayout>
@@ -315,12 +315,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Regime Alimentar"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/ra_550"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -329,12 +329,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade da pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_p_550"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -342,12 +342,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Peso Real"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_p_550"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -355,12 +355,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Data Pesagem"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/d_p_550"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
 
@@ -381,12 +381,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade CE"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_ce"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
 
@@ -395,12 +395,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Valor da CE"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_ce"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -408,12 +408,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Idade Musculatura"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/i_mus"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
 
                             <TableRow>
@@ -421,12 +421,12 @@
                                 <TextView
                                     android:paddingHorizontal="16dp"
                                     android:text="Valor Musculatura"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/r_mus"
                                     android:paddingHorizontal="16dp"
-                                    android:textSize="16sp" />
+                                    android:textSize="14sp" />
                             </TableRow>
                         </TableLayout>
                     </LinearLayout>

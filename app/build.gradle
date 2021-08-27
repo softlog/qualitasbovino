@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 android {
-    compileSdkVersion 27
+    compileSdkVersion 30
     defaultConfig {
         applicationId "br.eti.softlog.qualitasbovino"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 20
-        versionName "2.0.7"
+        targetSdkVersion 30
+        versionCode 35
+        versionName "2.2.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -40,9 +40,10 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
 
     implementation 'com.android.support:support-vector-drawable:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //testImplementation 'junit:junit:4.12'
+    //androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //implementation 'de.siegmar:fastcsv:1.0.2'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.blankj:utilcode:1.18.2'
@@ -54,6 +55,7 @@ dependencies {
     implementation 'com.github.angads25:filepicker:1.1.1'
     //https://github.com/Angads25/android-filepicker
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    //implementation 'com.afollestad.material-dialogs:core:3.3.0'
     //https://github.com/afollestad/material-dialogs/blob/master/README_OLD.md
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     //https://github.com/Pixplicity/EasyPrefs
@@ -106,11 +108,10 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     //https://github.com/PhilJay/MPAndroidChart1
 
-
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     //https://github.com/amitshekhariitbhu/Android-Debug-Database
 
-    implementation 'com.carlos.widget:numberkeyboard:1.1.+'
+    //implementation 'com.carlos.widget:numberkeyboard:1.1.+'
     //https://github.com/luoheng158/CustomNumberKeyboard
 
     //implementation 'com.github.santalu:mask-edittext:1.1.1'
@@ -124,7 +125,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 28
+    schemaVersion 32
 }
 
 //apply plugin: 'kotlin-android'

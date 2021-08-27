@@ -56,7 +56,15 @@ public class AnimalAdapterCertificacao extends RecyclerView.Adapter<AnimalCertif
         Util util = this.util;
         textView.setText(Util.getDateFormatDMY(animal.getDataNasc()));
         holder.txtSexo.setText(animal.getSexoDesc());
-        holder.txtFazenda.setText(animal.getCriador().getCodigo().toString());
+
+        if (animal.getMarcacao() == null){
+            holder.txtMarcacao.setText("NAO");
+        } else {
+            if (animal.getMarcacao()==1)
+                holder.txtMarcacao.setText("SIM");
+            else
+                holder.txtMarcacao.setText("NAO");
+        }
 
         holder.txtCeip.setText(animal.getCeip().trim());
 
@@ -65,6 +73,13 @@ public class AnimalAdapterCertificacao extends RecyclerView.Adapter<AnimalCertif
             holder.imgPremium.setVisibility(View.GONE);
         } else {
             holder.imgPremium.setVisibility(View.VISIBLE);
+        }
+
+        if (animal.getIdMae()==1){
+            holder.imgQsp.setVisibility(View.VISIBLE);
+        } else {
+            holder.imgQsp.setVisibility(View.INVISIBLE);
+            holder.imgQsp.setVisibility(View.GONE);
         }
 
 

@@ -39,7 +39,7 @@ public class ReaderMTFDados {
                             ,"sexo","situ_reprod","livro","ra_nasc","r_pnasc","ra_desm",
                             "i_pdesm","d_pdesm","r_pdesm","ra_365","i_p365","d_p365","r_p365",
                             "ra_450","i_p450","d_p450","r_p450","ra_550","i_p550","d_p550",
-                            "r_p550","i_ce","r_ce","a_ce","i_mus","r_mus")
+                            "r_p550","i_ce","r_ce","a_ce","i_mus","r_mus", "id_mae")
                     .withIgnoreHeaderCase()
                     .withSkipHeaderRecord()
                     .withTrim());
@@ -108,6 +108,7 @@ public class ReaderMTFDados {
                 Double aCe = Double.valueOf(r.get("a_ce"));
                 Double iMus = Double.valueOf(r.get("i_mus"));
                 Double rMus = Double.valueOf(r.get("r_mus"));
+                int idMae = Integer.parseInt(r.get("id_mae"));
 
 
                 manager.addMTFDados(criador,proprietario,animal,pai,mae,
@@ -116,7 +117,7 @@ public class ReaderMTFDados {
                         ra365,iP365,dP365,rP365,
                         ra450,iP450,dP450,rP450,
                         ra550,iP550,dP550,rP550,
-                        iCe,rCe,aCe,iMus,rMus
+                        iCe,rCe,aCe,iMus,rMus, idMae
                         );
 
                 //manager.addAllMedicaoAnimal(animal);

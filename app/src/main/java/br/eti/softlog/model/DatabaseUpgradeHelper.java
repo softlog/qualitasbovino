@@ -59,6 +59,9 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
         migrations.add(new MigrationV26());
         migrations.add(new MigrationV27());
         migrations.add(new MigrationV28());
+        migrations.add(new MigrationV29());
+        migrations.add(new MigrationV31());
+        migrations.add(new MigrationV32());
 
         // Sorting just to be safe, in case other people add migrations in the wrong order.
 //        Comparator<Migration> migrationComparator = new Comparator<Migration>() {
@@ -256,6 +259,51 @@ public class DatabaseUpgradeHelper extends DaoMaster.OpenHelper {
         public void runMigration(Database db) {
 
             db.execSQL("ALTER TABLE " + MTFDadosDao.TABLENAME + " ADD COLUMN lote STRING;");
+
+        }
+    }
+
+    private static class MigrationV29 implements Migration {
+
+        @Override
+        public Integer getVersion() {
+            return 29;
+        }
+
+        @Override
+        public void runMigration(Database db) {
+
+            db.execSQL("ALTER TABLE " + MTFDadosDao.TABLENAME + " ADD COLUMN idf_alterado INTEGER;");
+
+        }
+    }
+
+    private static class MigrationV31 implements Migration {
+
+        @Override
+        public Integer getVersion() {
+            return 31;
+        }
+
+        @Override
+        public void runMigration(Database db) {
+
+            db.execSQL("ALTER TABLE " + MTFDadosDao.TABLENAME + " ADD COLUMN ordem_avaliacao INTEGER;");
+
+        }
+    }
+
+    private static class MigrationV32 implements Migration {
+
+        @Override
+        public Integer getVersion() {
+            return 32;
+        }
+
+        @Override
+        public void runMigration(Database db) {
+
+            db.execSQL("ALTER TABLE " + MTFDadosDao.TABLENAME + " ADD COLUMN id_mae INTEGER;");
 
         }
     }

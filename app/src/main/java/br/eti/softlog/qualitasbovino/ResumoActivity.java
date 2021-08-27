@@ -44,6 +44,7 @@ import br.eti.softlog.model.MTFDados;
 import br.eti.softlog.model.MTFDadosDao;
 import br.eti.softlog.model.MedicoesAnimal;
 import br.eti.softlog.model.MedicoesAnimalDao;
+import br.eti.softlog.model.Resumo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.codecrafters.tableview.TableView;
@@ -228,7 +229,7 @@ public class ResumoActivity extends AppCompatActivity {
     @BindView(R.id.tableView6)
     TableView tableView6;
 
-
+    Resumo r;
 
 
     @Override
@@ -241,6 +242,7 @@ public class ResumoActivity extends AppCompatActivity {
         app = (AppMain) getApplication();
         manager = new Manager(app);
         util = new Util();
+
 
         getSupportActionBar().setTitle("Resumo");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -266,209 +268,12 @@ public class ResumoActivity extends AppCompatActivity {
 
     public void getResumo(Long idCriador){
 
-        qtAnimais=0;
-        qtAnimaisMacho=0;
-        qtAnimaisFemea=0;
 
-        qtAnimaisAvaliados=0;
-        qtAnimaisMachoAvaliado=0;
-        qtAnimaisFemeaAvaliado=0;
 
-        qtAnimaisAprovados = 0;
-        qtAnimaisMachoAprovado = 0;
-        qtAnimaisFemeaAprovado = 0;
+        r = new Resumo(getApplicationContext(),idCriador);
 
-        qtAnimaisDescarte=0;
-        qtAnimaisMachoDescarte=0;
-        qtAnimaisFemeaDescarte=0;
 
-        qtAnimaisVenda = 0;
-        qtAnimaisMachoVenda = 0;
-        qtAnimaisFemeaVenda = 0;
-
-        qtAnimaisDescarteVenda = 0;
-        qtAnimaisMachoDescarteVenda = 0;
-        qtAnimalFemeaDescarteVenda = 0;
-
-        qtAnimaisDescarteVenda = 0;
-        qtAnimaisMachoDescarteVenda = 0;
-        qtAnimalFemeaDescarteVenda = 0;
-
-
-        //Total Animal Macho
-        QueryBuilder qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("M"));
-        animais = qryAnimal.list();
-        qtAnimaisMacho = animais.size();
-
-        //Total Animal Femea
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("F"));
-
-        animais = qryAnimal.list();
-
-        qtAnimaisFemea = animais.size();
-
-        qtAnimais = qtAnimaisMacho + qtAnimaisFemea;
-
-       //Animais Avaliados Macho
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("M"))
-                .where(MTFDadosDao.Properties.Avaliado.eq(true));
-
-        animais = qryAnimal.list();
-
-        qtAnimaisMachoAvaliado = animais.size();
-
-        //Animais Avaliados Femea
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("F"))
-                .where(MTFDadosDao.Properties.Avaliado.eq(true));
-
-        animais = qryAnimal.list();
-
-        qtAnimaisFemeaAvaliado = animais.size();
-
-        qtAnimaisAvaliados = qtAnimaisMachoAvaliado + qtAnimaisFemeaAvaliado;
-
-        //Animais Venda Macho Descartado
-        WhereCondition.StringCondition condition = new WhereCondition.StringCondition("" +
-                "animal IN (SELECT animal FROM medicoes_animal WHERE medicao_id = 321524 AND valor = 1)" +
-                " AND animal IN (SELECT animal FROM medicoes_animal WHERE medicao_id = 141529 AND valor = 1)");
-
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("M"))
-                .where(condition);
-        animais = qryAnimal.list();
-
-        qtAnimaisMachoDescarteVenda = animais.size();
-
-        //Animais Venda Femea Descartado
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("F"))
-                .where(condition);
-        animais = qryAnimal.list();
-
-        qtAnimalFemeaDescarteVenda = animais.size();
-
-        qtAnimaisDescarteVenda = qtAnimaisMachoDescarteVenda + qtAnimalFemeaDescarteVenda;
-
-
-        condition = new WhereCondition.StringCondition("" +
-                "animal IN (SELECT animal FROM medicoes_animal WHERE medicao_id = 321524 AND valor = 1)");
-
-
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("M"))
-                .where(condition);
-        animais = qryAnimal.list();
-
-        qtAnimaisMachoVenda = animais.size();
-
-        //Animais Venda Femea Descartado
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("F"))
-                .where(condition);
-        animais = qryAnimal.list();
-
-        qtAnimaisFemeaVenda = animais.size();
-
-        qtAnimaisVenda = qtAnimaisMachoVenda + qtAnimaisFemeaVenda;
-
-        //Animais Descartados Macho
-        condition = new WhereCondition.StringCondition("" +
-                "animal IN (SELECT animal FROM medicoes_animal WHERE medicao_id = 141529 AND valor = 1)");
-
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("M"))
-                .where(condition);
-        animais = qryAnimal.list();
-
-        qtAnimaisMachoDescarte = animais.size() - qtAnimaisMachoDescarteVenda;
-
-        //Animais Descartados Fêmea
-        qryAnimal = app.getDaoSession().getMTFDadosDao()
-                .queryBuilder().orderAsc(MTFDadosDao.Properties.Id);
-
-        if (idCriador>0) {
-            qryAnimal.where(MTFDadosDao.Properties.CriadorId.eq(idCriador));
-        }
-
-        qryAnimal.where(MTFDadosDao.Properties.Sexo.eq("F"))
-                .where(condition);
-
-        animais = qryAnimal.list();
-
-        qtAnimaisFemeaDescarte = animais.size() - qtAnimalFemeaDescarteVenda;
-
-        qtAnimaisDescarte = qtAnimaisMachoDescarte + qtAnimaisFemeaDescarte;
-
-        qtAnimaisSoVenda = qtAnimaisVenda - qtAnimaisDescarteVenda;
-        qtAnimaisMachoSoVenda = qtAnimaisMachoVenda - qtAnimaisMachoDescarteVenda;
-        qtAnimaisFemeaSoVenda = qtAnimaisFemeaVenda - qtAnimalFemeaDescarteVenda;
-
-        qtAnimaisAprovados = qtAnimaisAvaliados - qtAnimaisVenda - qtAnimaisDescarte;
-        qtAnimaisMachoAprovado = qtAnimaisMachoAvaliado - qtAnimaisMachoVenda - qtAnimaisMachoDescarte;
-        qtAnimaisFemeaAprovado = qtAnimaisFemeaAvaliado - qtAnimaisFemeaVenda - qtAnimaisFemeaDescarte;
-
-        String[] headers = {"", "Total", "Avaliado","%", "Aprov.", "%","Desc","%","Venda","%"};
+        String[] headers = {"", "Total", "Avaliado","%", "Aprov.", "%","Desc","%","Outros","%"};
 
         SimpleTableHeaderAdapter h1 = new SimpleTableHeaderAdapter(this, headers);
         h1.setTextSize(12);
@@ -476,58 +281,58 @@ public class ResumoActivity extends AppCompatActivity {
         h1.setPaddingBottom(10);
         tableView.setHeaderAdapter(h1);
 
-        Long percAnimalAprovado = Math.round(Double.valueOf(qtAnimaisAprovados)/Double.valueOf(qtAnimaisAvaliados)*100);
-        Long percAnimalMachoAprovado = Math.round(Double.valueOf(qtAnimaisMachoAprovado)/Double.valueOf(qtAnimaisMachoAvaliado)*100);
-        Long percAnimalFemeaAprovado = Math.round(Double.valueOf(qtAnimaisFemeaAprovado)/Double.valueOf(qtAnimaisFemeaAvaliado)*100);
+        Long percAnimalAprovado = Math.round(Double.valueOf(r.getQtAnimaisAprovados())/Double.valueOf(r.getQtAnimaisAvaliados())*100);
+        Long percAnimalMachoAprovado = Math.round(Double.valueOf(r.getQtAnimaisMachoAprovado())/Double.valueOf(r.getQtAnimaisMachoAvaliado())*100);
+        Long percAnimalFemeaAprovado = Math.round(Double.valueOf(r.getQtAnimaisFemeaAprovado())/Double.valueOf(r.getQtAnimaisFemeaAvaliado())*100);
 
-        Long percAnimalAvaliado = Math.round(Double.valueOf(qtAnimaisAvaliados)/Double.valueOf(qtAnimais)*100);
-        Long percAnimalMachoAvaliado = Math.round(Double.valueOf(qtAnimaisMachoAvaliado)/Double.valueOf(qtAnimaisMacho)*100);
-        Long percAnimalFemeaAvaliado = Math.round(Double.valueOf(qtAnimaisFemeaAvaliado)/Double.valueOf(qtAnimaisFemea)*100);
+        Long percAnimalAvaliado = Math.round(Double.valueOf(r.getQtAnimaisAvaliados())/Double.valueOf(r.getQtAnimais())*100);
+        Long percAnimalMachoAvaliado = Math.round(Double.valueOf(r.getQtAnimaisMachoAvaliado())/Double.valueOf(r.getQtAnimaisMacho())*100);
+        Long percAnimalFemeaAvaliado = Math.round(Double.valueOf(r.getQtAnimaisFemeaAvaliado())/Double.valueOf(r.getQtAnimaisFemea())*100);
 
-        Long percAnimalDescarte = Math.round(Double.valueOf(qtAnimaisDescarte)/Double.valueOf(qtAnimaisAvaliados)*100);
-        Long percAnimalMachoDescarte = Math.round(Double.valueOf(qtAnimaisMachoDescarte)/Double.valueOf(qtAnimaisMachoAvaliado)*100);
-        Long percAnimalFemeaDescarte = Math.round(Double.valueOf(qtAnimaisFemeaDescarte)/Double.valueOf(qtAnimaisFemeaAvaliado)*100);
+        Long percAnimalDescarte = Math.round(Double.valueOf(r.getQtAnimaisDescarte())/Double.valueOf(r.getQtAnimaisAvaliados())*100);
+        Long percAnimalMachoDescarte = Math.round(Double.valueOf(r.getQtAnimaisMachoDescarte())/Double.valueOf(r.getQtAnimaisMachoAvaliado())*100);
+        Long percAnimalFemeaDescarte = Math.round(Double.valueOf(r.getQtAnimaisFemeaDescarte())/Double.valueOf(r.getQtAnimaisFemeaAvaliado())*100);
 
-        Long percAnimalVenda = 100 - percAnimalDescarte - percAnimalAprovado;
-        Long percAnimalMachoVenda = 100 - percAnimalMachoDescarte - percAnimalMachoAprovado;
-        Long percAnimalFemeaVenda = 100 - percAnimalFemeaDescarte - percAnimalFemeaAprovado;
+        Long percAnimalVenda = Math.round(Double.valueOf(r.getQtAnimaisOutros())/Double.valueOf(r.getQtAnimaisAvaliados())*100);
+        Long percAnimalMachoVenda = Math.round(Double.valueOf(r.getQtAnimaisMachoOutros())/Double.valueOf(r.getQtAnimaisMachoAvaliado())*100);
+        Long percAnimalFemeaVenda = Math.round(Double.valueOf(r.getQtAnimaisFemeaOutros())/Double.valueOf(r.getQtAnimaisFemeaAvaliado())*100);
 
         String[][] resumo = {
                 {
                         "Machos",
-                        String.valueOf(qtAnimaisMacho),
-                        String.valueOf(qtAnimaisMachoAvaliado),
+                        String.valueOf(r.getQtAnimaisMacho()),
+                        String.valueOf(r.getQtAnimaisMachoAvaliado()),
                         String.valueOf(percAnimalMachoAvaliado) + "%",
-                        String.valueOf(qtAnimaisMachoAprovado),
+                        String.valueOf(r.getQtAnimaisMachoAprovado()),
                         String.valueOf(percAnimalMachoAprovado)+ "%",
-                        String.valueOf(qtAnimaisMachoDescarte),
+                        String.valueOf(r.getQtAnimaisMachoDescarte()),
                         String.valueOf(percAnimalMachoDescarte) + "%",
-                        String.valueOf(qtAnimaisMachoVenda),
+                        String.valueOf(r.getQtAnimaisMachoOutros()),
                         String.valueOf(percAnimalMachoVenda) + "%"
                 },
                 {
                         "Fêmeas",
-                        String.valueOf(qtAnimaisFemea),
-                        String.valueOf(qtAnimaisFemeaAvaliado),
+                        String.valueOf(r.getQtAnimaisFemea()),
+                        String.valueOf(r.getQtAnimaisFemeaAvaliado()),
                         String.valueOf(percAnimalFemeaAvaliado) + "%",
-                        String.valueOf(qtAnimaisFemeaAprovado),
+                        String.valueOf(r.getQtAnimaisFemeaAprovado()),
                         String.valueOf(percAnimalFemeaAprovado)+ "%",
-                        String.valueOf(qtAnimaisFemeaDescarte),
+                        String.valueOf(r.getQtAnimaisFemeaDescarte()),
                         String.valueOf(percAnimalFemeaDescarte)+ "%",
-                        String.valueOf(qtAnimaisFemeaVenda),
+                        String.valueOf(r.getQtAnimaisFemeaOutros()),
                         String.valueOf(percAnimalFemeaVenda) + "%"
 
                 },
                 {
                         "Total",
-                        String.valueOf(qtAnimais),
-                        String.valueOf(qtAnimaisAvaliados),
+                        String.valueOf(r.getQtAnimais()),
+                        String.valueOf(r.getQtAnimaisAvaliados()),
                         String.valueOf(percAnimalAvaliado) + "%",
-                        String.valueOf(qtAnimaisAprovados),
+                        String.valueOf(r.getQtAnimaisAprovados()),
                         String.valueOf(percAnimalAprovado)+ "%",
-                        String.valueOf(qtAnimaisDescarte),
+                        String.valueOf(r.getQtAnimaisDescarte()),
                         String.valueOf(percAnimalDescarte)+ "%",
-                        String.valueOf(qtAnimaisVenda),
+                        String.valueOf(r.getQtAnimaisOutros()),
                         String.valueOf(percAnimalVenda) + "%"
                 }
         };
@@ -555,7 +360,7 @@ public class ResumoActivity extends AppCompatActivity {
         tableView.setDataAdapter(da1);
 
 
-        String[] headers2 = {"", "Venda", "Avaliado","Não Avaliado"};
+        String[] headers2 = {"", "Avaliado","Não Avaliado","Venda", "Comercial"};
 
         SimpleTableHeaderAdapter h2 = new SimpleTableHeaderAdapter(this, headers2);
         h2.setTextSize(14);
@@ -566,186 +371,32 @@ public class ResumoActivity extends AppCompatActivity {
         String[][] resumo2 = {
                 {
                         "Machos",
-                        String.valueOf(qtAnimaisMachoVenda),
-                        String.valueOf(qtAnimaisMachoVenda-qtAnimaisMachoSoVenda),
-                        String.valueOf(qtAnimaisMachoSoVenda)
+                        String.valueOf(r.getQtAnimaisMachoAvaliado()),
+                        String.valueOf(r.getQtAnimaisMacho()-r.getQtAnimaisMachoAvaliado()),
+                        String.valueOf(r.getQtAnimaisMachoVenda()),
+                        String.valueOf(r.getQtAnimaisMachoComercial())
                 },
                 {
                         "Fêmeas",
-                        String.valueOf(qtAnimaisFemeaVenda),
-                        String.valueOf(qtAnimaisFemeaVenda-qtAnimaisFemeaSoVenda),
-                        String.valueOf(qtAnimaisFemeaSoVenda)
+                        String.valueOf(r.getQtAnimaisFemeaAvaliado()),
+                        String.valueOf(r.getQtAnimaisFemea()-r.getQtAnimaisFemeaAvaliado()),
+                        String.valueOf(r.getQtAnimaisFemeaVenda()),
+                        String.valueOf(r.getQtAnimaisFemeaComercial())
 
                 },
                 {
                         "Total",
-                        String.valueOf(qtAnimaisVenda),
-                        String.valueOf(qtAnimaisVenda-qtAnimaisSoVenda),
-                        String.valueOf(qtAnimaisSoVenda)
+                        String.valueOf(r.getQtAnimaisAvaliados()),
+                        String.valueOf(r.getQtAnimais()-r.getQtAnimaisAvaliados()),
+                        String.valueOf(r.getQtAnimaisVenda()),
+                        String.valueOf(r.getQtAnimaisComercial())
+
                 }
         };
 
         SimpleTableDataAdapter da2 = new SimpleTableDataAdapter(this, resumo2);
         da2.setTextSize(14);
         tableView2.setDataAdapter(da2);
-
-
-        //Media das medidas Macho
-
-        String qryMediaM;
-        if (idCriador>0){
-            qryMediaM = "SELECT m.medicao_id, me.abrev, a.sexo, COUNT(*) as qt, ROUND(AVG(m.valor)) as media \n" +
-                    "FROM medicoes_animal m\n" +
-                    "LEFT JOIN mtf_dados a ON a._id = m.animal \n" +
-                    "LEFT JOIN medicao me ON me._id = m.medicao_id\n" +
-                    "WHERE a.sexo = 'M' AND m.valor IS NOT null AND m.valor <> 9 AND m.medicao_id not in (131129,131811,141529,142528,222530,321524) \n" +
-                    " AND a.criador_id = " + String.valueOf(idCriador) + " \n" +
-                    " GROUP BY m.medicao_id, me.abrev, a.sexo \n" +
-                    "ORDER BY me.ordem, m.medicao_id";
-        } else {
-            qryMediaM = "SELECT m.medicao_id, me.abrev, a.sexo, COUNT(*) as qt, ROUND(AVG(m.valor)) as media \n" +
-                    "FROM medicoes_animal m\n" +
-                    "LEFT JOIN mtf_dados a ON a._id = m.animal \n" +
-                    "LEFT JOIN medicao me ON me._id = m.medicao_id\n" +
-                    "WHERE a.sexo = 'M' AND m.valor IS NOT null AND m.valor <> 9 AND m.medicao_id not in (131129,131811,141529,142528,222530,321524) GROUP BY m.medicao_id, me.abrev, a.sexo \n" +
-                    "ORDER BY me.ordem, m.medicao_id";
-        }
-
-
-        Cursor curMediaM = app.getDb().rawQuery(qryMediaM,null);
-
-        while (curMediaM.moveToNext()){
-            String abrev = curMediaM.getString(1);
-            String media = String.valueOf(curMediaM.getLong(4));
-
-            switch (abrev){
-                case "REP":
-                    mRepM = media;
-                    break;
-                case "UBE":
-                    mUbeM = media;
-                    break;
-                case "MUS":
-                    mMuscM = media;
-                    break;
-                case "FRA":
-                    mFraM = media;
-                    break;
-                case "APR":
-                    mAprM = media;
-                    break;
-                case "OSS":
-                    mOssM = media;
-                    break;
-                case "PRO":
-                    mProM = media;
-                    break;
-                case "GAR":
-                    mGarM = media;
-                    break;
-                case "UMB":
-                    mUmbM = media;
-                    break;
-                case "BOC":
-                    mBocM = media;
-                    break;
-                case "CAU":
-                    mCauM = media;
-                    break;
-                case "PLA":
-                    mPlaM = media;
-                    break;
-                case "TEM":
-                    mTemM = media;
-                    break;
-                case "TTE":
-                    mTteM = media;
-                    break;
-                case "RAC":
-                    mRacM = media;
-                    break;
-
-            }
-
-        }
-
-
-        //Media das medidas Femea
-        String qryMediaF;
-        if (idCriador>0){
-            qryMediaF = "SELECT m.medicao_id, me.abrev, a.sexo, COUNT(*) as qt, ROUND(AVG(m.valor)) as media \n" +
-                    "FROM medicoes_animal m\n" +
-                    "LEFT JOIN mtf_dados a ON a._id = m.animal \n" +
-                    "LEFT JOIN medicao me ON me._id = m.medicao_id\n" +
-                    "WHERE a.sexo = 'F' AND m.valor IS NOT null AND m.valor <> 9 AND m.medicao_id not in (131129,131811,141529,142528,222530,321524) \n" +
-                        " AND a.criador_id = " + String.valueOf(idCriador) + "\n" +
-                    "GROUP BY m.medicao_id, me.abrev, a.sexo \n" +
-
-            "ORDER BY me.ordem, m.medicao_id";
-        } else {
-            qryMediaF = "SELECT m.medicao_id, me.abrev, a.sexo, COUNT(*) as qt, ROUND(AVG(m.valor)) as media \n" +
-                    "FROM medicoes_animal m\n" +
-                    "LEFT JOIN mtf_dados a ON a._id = m.animal \n" +
-                    "LEFT JOIN medicao me ON me._id = m.medicao_id\n" +
-                    "WHERE a.sexo = 'F' AND m.valor IS NOT null AND m.valor <> 9 AND m.medicao_id not in (131129,131811,141529,142528,222530,321524) GROUP BY m.medicao_id, me.abrev, a.sexo \n" +
-                    "ORDER BY me.ordem, m.medicao_id";
-        }
-
-
-        Cursor curMediaF = app.getDb().rawQuery(qryMediaF,null);
-
-        while (curMediaF.moveToNext()){
-            String abrev = curMediaF.getString(1);
-            String media = String.valueOf(curMediaF.getLong(4));
-
-            switch (abrev){
-                case "REP":
-                    mRepF = media;
-                    break;
-                case "UBE":
-                    mUbeF = media;
-                    break;
-                case "MUS":
-                    mMuscF = media;
-                    break;
-                case "FRA":
-                    mFraF = media;
-                    break;
-                case "APR":
-                    mAprF = media;
-                    break;
-                case "OSS":
-                    mOssF = media;
-                    break;
-                case "PRO":
-                    mProF = media;
-                    break;
-                case "GAR":
-                    mGarF = media;
-                    break;
-                case "UMB":
-                    mUmbF = media;
-                    break;
-                case "BOC":
-                    mBocF = media;
-                    break;
-                case "CAU":
-                    mCauF = media;
-                    break;
-                case "PLA":
-                    mPlaF = media;
-                    break;
-                case "TEM":
-                    mTemF = media;
-                    break;
-                case "TTE":
-                    mTteF = media;
-                    break;
-                case "RAC":
-                    mRacF = media;
-                    break;
-            }
-        }
 
         //Tabela 3
         String[] headers3 = {"Media", "Rep", "Ube","Mus","Fra","Apr","Oss","Pro","Gar"};
@@ -759,25 +410,25 @@ public class ResumoActivity extends AppCompatActivity {
         String[][] resumo3 = {
                 {
                         "Machos",
-                        mRepM,
+                        r.getmRepM(),
                         "-",
-                        mMuscM,
-                        mFraM,
-                        mAprM,
-                        mOssM,
-                        mProM,
-                        mGarM
+                        r.getmMuscM(),
+                        r.getmFraM(),
+                        r.getmAprM(),
+                        r.getmOssM(),
+                        r.getmProM(),
+                        r.getmGarM()
                 },
                 {
                         "Fêmeas",
-                        mRepF,
-                        mUbeF,
-                        mMuscF,
-                        mFraF,
-                        mAprF,
-                        mOssF,
-                        mProF,
-                        mGarF
+                        r.getmRepF(),
+                        r.getmUbeF(),
+                        r.getmMuscF(),
+                        r.getmFraF(),
+                        r.getmAprF(),
+                        r.getmOssF(),
+                        r.getmProF(),
+                        r.getmGarF()
                 }
         };
 
@@ -789,7 +440,7 @@ public class ResumoActivity extends AppCompatActivity {
         tableView3.setDataAdapter(da3);
 
         //Tabela 6
-        String[] headers6 =  {"Media", "Umb", "Boc","Cau","Pla","Tem","Tte","Rac"};
+        String[] headers6 =  {"Media", "Umb", "Boc","Cau","Pla","Tem","Tte","Rac",""};
 
         SimpleTableHeaderAdapter h6 = new SimpleTableHeaderAdapter(this, headers6);
         h6.setTextSize(14);
@@ -800,23 +451,25 @@ public class ResumoActivity extends AppCompatActivity {
         String[][] resumo6 =  {
                 {
                         "Machos",
-                        mUmbM,
-                        mBocM,
-                        mCauM,
-                        mPlaM,
-                        mTemM,
-                        mTteM,
-                        mRacM
+                        r.getmUmbM(),
+                        r.getmBocM(),
+                        r.getmCauM(),
+                        r.getmPlaM(),
+                        r.getmTemM(),
+                        r.getmTteM(),
+                        r.getmRacM(),
+                        ""
                 },
                 {
                         "Fêmeas",
-                        mUmbF,
-                        mBocF,
-                        mCauF,
-                        mPlaF,
-                        mTemF,
+                        r.getmUmbF(),
+                        r.getmBocF(),
+                        r.getmCauF(),
+                        r.getmPlaF(),
+                        r.getmTemF(),
                         "-",
-                        mRacF
+                        r.getmRacF(),
+                        ""
                 }
         };
 
@@ -826,160 +479,6 @@ public class ResumoActivity extends AppCompatActivity {
         SimpleTableDataAdapter da6 = new SimpleTableDataAdapter(this, resumo6);
         da6.setTextSize(14);
         tableView6.setDataAdapter(da6);
-
-        //Medidas Animais
-        qtNascM = 0;
-        qtNascF = 0;
-        qtDesmM = 0;
-        qtDesmF = 0;
-        qt365M = 0;
-        qt365M = 0;
-        qt450M = 0;
-        qt450F = 0;
-        qt550M = 0;
-        qt550F = 0;
-        qtCeM = 0;
-        qtCeF = 0;
-
-        mNasc = 0.00;
-        mNascM = 0.00;
-        mNascF = 0.00;
-
-        mDesm = 0.00;
-        mDesmM = 0.00;
-        mDesmF = 0.00;
-
-        m365 = 0.00;
-        m365M = 0.00;
-        m365F = 0.00;
-
-        m450 = 0.00;
-        m450M = 0.00;
-        m450F = 0.00;
-
-        m550 = 0.00;
-        m550M = 0.00;
-        m550F = 0.00;
-
-        mCe = 0.00;
-        mCeM = 0.00;
-        mCeF = 0.00;
-
-        vNascM = 0.00;
-        vDesmM = 0.00;
-        v365M = 0.00;
-        v450M = 0.00;
-        v550M = 0.00;
-        vCeM = 0.00;
-
-        vNascF = 0.00;
-        vDesmF = 0.00;
-        v365F = 0.00;
-        v450F = 0.00;
-        v550F = 0.00;
-        vCeF = 0.00;
-
-
-        if (idCriador>0)
-            animais = app.getDaoSession().getMTFDadosDao().queryBuilder()
-                    .where(MTFDadosDao.Properties.CriadorId.eq(idCriador)).list();
-        else
-            animais = app.getDaoSession().getMTFDadosDao().queryBuilder().list();
-
-
-        for (int i = 0; i<animais.size();i++){
-            animal = animais.get(i);
-
-            if (animal.getSexo().equals("M"))
-            {
-                if (animal.getRPNasc()>0){
-                    qtNascM++;
-                    vNascM = vNascM + animal.getRPNasc();
-                }
-
-
-                if (animal.getRPDesm()>0){
-                    qtDesmM++;
-                    vDesmM = vDesmM + animal.getRPDesm();
-                }
-
-
-                if (animal.getRP365()>0){
-                    qt365M++;
-                    v365M = v365M + animal.getRP365();
-                }
-
-
-                if (animal.getRP450()>0){
-                    qt450M++;
-                    v450M = v450M + animal.getRP450();
-                }
-
-
-                if (animal.getRP550()>0){
-                    qt550M++;
-                    v550M = v550M + animal.getRP550();
-                }
-
-
-                if (animal.getRCe()>0){
-                    qtCeM++;
-                    vCeM = vCeM + animal.getRCe();
-                }
-
-            } else {
-                if (animal.getRPNasc()>0){
-                    qtNascF++;
-                    vNascF = vNascF + animal.getRPNasc();
-                }
-
-
-                if (animal.getRPDesm()>0){
-                    qtDesmF++;
-                    vDesmF = vDesmF + animal.getRPDesm();
-                }
-
-
-                if (animal.getRP365()>0){
-                    qt365F++;
-                    v365F = v365F + animal.getRP365();
-                }
-
-
-                if (animal.getRP450()>0){
-                    qt450F++;
-                    v450F = v450F + animal.getRP450();
-                }
-
-
-                if (animal.getRP550()>0){
-                    qt550F++;
-                    v550F = v550F + animal.getRP550();
-                }
-
-
-                if (animal.getRCe()>0){
-                    qtCeF++;
-                    vCeF = vCeF + animal.getRCe();
-                }
-            }
-
-        }
-
-        mNascM = vNascM/qtNascM;
-        mDesmM = vDesmM/qtDesmM;
-        m365M = v365M/qt365M;
-        m450M = v450M/qt450M;
-        m550M = v550M/qt550M;
-        mCeM = vCeM/qtCeM;
-
-        mNascF = vNascF/qtNascF;
-        mDesmF = vDesmF/qtDesmF;
-        m365F = v365F/qt365F;
-        m450F = v450F/qt450F;
-        m550F = v550F/qt550F;
-        mCeF = vCeF/qtCeF;
-
 
         //Tabela 4
         String[] headers4 = {"Animais", "Nasc", "Desm","365 d", "450 d", "550 d","CE"};
@@ -992,21 +491,21 @@ public class ResumoActivity extends AppCompatActivity {
         String[][] resumo4 = {
                 {
                         "Machos",
-                        String.valueOf(qtNascM),
-                        String.valueOf(qtDesmM),
-                        String.valueOf(qt365M) ,
-                        String.valueOf(qt450M),
-                        String.valueOf(qt550M),
-                        String.valueOf(qtCeM)
+                        String.valueOf(r.getQtNascM()),
+                        String.valueOf(r.getQtDesmM()),
+                        String.valueOf(r.getQt365M()) ,
+                        String.valueOf(r.getQt450M()),
+                        String.valueOf(r.getQt550M()),
+                        String.valueOf(r.getQtCeM())
                 },
                 {
                         "Fêmeas",
-                        String.valueOf(qtNascF),
-                        String.valueOf(qtDesmF),
-                        String.valueOf(qt365F) ,
-                        String.valueOf(qt450F),
-                        String.valueOf(qt550F),
-                        String.valueOf(qtCeF)
+                        String.valueOf(r.getQtNascF()),
+                        String.valueOf(r.getQtDesmF()),
+                        String.valueOf(r.getQt365F()) ,
+                        String.valueOf(r.getQt450F()),
+                        String.valueOf(r.getQt550F()),
+                        String.valueOf(r.getQtCeF())
 
                 }
         };
@@ -1045,20 +544,20 @@ public class ResumoActivity extends AppCompatActivity {
         String[][] resumo5 = {
                 {
                         "Machos",
-                        String.valueOf(converterDoubleString(mNascM)),
-                        String.valueOf(converterDoubleString(mDesmM)),
-                        String.valueOf(converterDoubleString(m365M)) ,
-                        String.valueOf(converterDoubleString(m450M)),
-                        String.valueOf(converterDoubleString(m550M)),
-                        String.valueOf(converterDoubleString(mCeM))
+                        String.valueOf(converterDoubleString(r.getmNascM())),
+                        String.valueOf(converterDoubleString(r.getmDesmM())),
+                        String.valueOf(converterDoubleString(r.getM365M())) ,
+                        String.valueOf(converterDoubleString(r.getM450M())),
+                        String.valueOf(converterDoubleString(r.getM550M())),
+                        String.valueOf(converterDoubleString(r.getmCeM()))
                 },
                 {
                         "Fêmeas",
-                        String.valueOf(converterDoubleString(mNascF)),
-                        String.valueOf(converterDoubleString(mDesmF)),
-                        String.valueOf(converterDoubleString(m365F)) ,
-                        String.valueOf(converterDoubleString(m450F)),
-                        String.valueOf(converterDoubleString(m550F)),
+                        String.valueOf(converterDoubleString(r.getmNascF())),
+                        String.valueOf(converterDoubleString(r.getmDesmF())),
+                        String.valueOf(converterDoubleString(r.getM365F())) ,
+                        String.valueOf(converterDoubleString(r.getM450F())),
+                        String.valueOf(converterDoubleString(r.getM550F())),
                         String.valueOf("-")
 
                 }

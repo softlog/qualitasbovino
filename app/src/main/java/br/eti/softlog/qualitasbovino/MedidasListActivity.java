@@ -39,7 +39,7 @@ public class MedidasListActivity extends AppCompatActivity {
 
         app = (AppMain)getApplication();
 
-        // TODO : Add here your objects !!
+
         //lists.add(new String());
 
         medicoes = app.getDaoSession().getMedicaoDao().queryBuilder().orderAsc(

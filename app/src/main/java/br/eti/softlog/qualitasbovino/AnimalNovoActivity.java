@@ -77,8 +77,11 @@ public class AnimalNovoActivity extends AppCompatActivity {
     @BindView(R.id.opt_femea)
     RadioButton optFemea;
 
+
     @BindView(R.id.btn_gravar)
     Button btnGravar;
+
+    public String codigoIdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,7 @@ public class AnimalNovoActivity extends AppCompatActivity {
         manager = new Manager(app);
         util = new Util();
         alterar = false;
+        codigoIdf = "";
 
         ArrayList<InputFilter> curInputFilters = new ArrayList<InputFilter>(Arrays.asList(etPrefixo.getFilters()));
         curInputFilters.add(0, new AlphaNumericInputFilter());
@@ -176,20 +180,20 @@ public class AnimalNovoActivity extends AppCompatActivity {
 
         String prefixo;
         String numero;
-        String codigo;
+        final String codigo;
 
         prefixo = etPrefixo.getText().toString();
         numero = etCodigo.getText().toString();
-
+        numero = numero.replaceAll("^\0+", "");
         if (!prefixo.isEmpty())
         {
             String prefixoAnterior = Prefs.getString("prefixo_fazenda","");
             //Se nao for igual ao prefixo anterior, grava o novo
             if (!prefixoAnterior.equals(prefixo))
                 Prefs.putString("prefixo_fazenda",prefixo);
-            codigo = prefixo + " " + numero;
+            codigo = util.trataIdf(prefixo + " " + numero);
         } else{
-            codigo = numero;
+            codigo = util.trataIdf(numero);
             Prefs.putString("prefixo_fazenda","");
         }
 
@@ -224,11 +228,17 @@ public class AnimalNovoActivity extends AppCompatActivity {
             layoutDataNascimento.setErrorEnabled(false);
         }
 
+        if (alterar && !(codigoIdf.equals(codigo))){
+            alterar = false;
+        }
+
+
+
         //Se animal for novo
-        if (!alterar){
+        if (!alterar ){
             searchAnimais(codigo);
             if (animais.size() > 0) {
-                if (animais.size() == 1){
+                if (animais.size() == 1 && animais.get(0).getImportado() == 0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Alerta");
                     builder.setMessage("Animal já existe, deseja alterar?");
@@ -236,6 +246,7 @@ public class AnimalNovoActivity extends AppCompatActivity {
                     builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            codigoIdf = codigo;
                             alterar = true;
                         }
                     });
@@ -274,22 +285,33 @@ public class AnimalNovoActivity extends AppCompatActivity {
         Date dtRegistro = new Date();
         String cDtRegisro = util.getDateFormatYMD(dtRegistro);
 
-        if (alterar)
-            animal = manager.editAnimalNovo(animais.get(0).getId(),codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId);
-        else
+        if (alterar) {
+            animal = manager.editAnimalNovo(animais.get(0).getId(), codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId, 1);
+        }
+        else {
             animal = manager.addAnimalNovo(codigo, nome, sexo, cDataNascimento, cDtRegisro, fazendaId, fazendaId);
+        }
+
 
         return true;
     }
 
     public void searchAnimais(String filtroAnimal) {
 
+
+
+        //TODO: Não está olhando para os animais importados.
         Long idCriador = Prefs.getLong("filtro_fazenda", 0);
         String sexo = Prefs.getString("filtro_sexo", "M");
 
 
         QueryBuilder queryBuilder;
+
+        app.getDaoSession().getMTFDadosDao().queryBuilder().LOG_VALUES = false;
+        app.getDaoSession().getMTFDadosDao().queryBuilder().LOG_SQL = false;
         queryBuilder = app.getDaoSession().getMTFDadosDao().queryBuilder();
+
+
 
         QueryBuilder queryBuilder1;
         QueryBuilder queryBuilder2;
@@ -307,7 +329,7 @@ public class AnimalNovoActivity extends AppCompatActivity {
             animais = queryBuilder2.orderAsc(MTFDadosDao.Properties.Animal).list();
         } else {
             queryBuilder3 = queryBuilder1.where(MTFDadosDao.Properties.Idf2.eq(filtroAnimal));
-            animais = queryBuilder2.orderAsc(MTFDadosDao.Properties.Animal).list();
+            animais = queryBuilder3.orderAsc(MTFDadosDao.Properties.Animal).list();
 
             if (animais == null) {
                 //Log.d("Mensagem", "Animal não encontrado");

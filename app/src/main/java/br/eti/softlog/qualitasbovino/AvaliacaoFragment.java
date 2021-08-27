@@ -52,10 +52,7 @@ import br.eti.softlog.model.MedicoesAnimalDao;
  */
 
 public class AvaliacaoFragment extends Fragment implements ItemClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    // TODO: Rename and change types of parameters
     private RecyclerView recyclerView;
     AvaliacaoAdapter avaliacaoAdapter;
     public MTFDados animal;
@@ -87,7 +84,7 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
      *
      * @return A new instance of fragment AvaliacaoFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static AvaliacaoFragment newInstance() {
         AvaliacaoFragment fragment = new AvaliacaoFragment();
         Bundle args = new Bundle();
@@ -124,6 +121,7 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                 positionDescarte = cont;
 
             cont++;
+
         }
         avaliacaoAdapter = new AvaliacaoAdapter(medicoesAnimal,
                 ((AnimalMainActivity) activity).getApplicationContext());
@@ -248,7 +246,12 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                 avaliado = true;
                 Boolean vendaAvaliado;
                 Boolean vendaComNota;
+
+                Boolean comercialAvaliado;
+                Boolean comercialComNota;
+
                 vendaAvaliado = false;
+                comercialAvaliado = false;
 
                 int qtAvaliado;
                 qtAvaliado = 0;
@@ -265,18 +268,50 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                         qtAvaliado++;
                         if (medicoesAnimal.get(i).getMedicaoId() == 321524)
                             vendaAvaliado = true;
+
+                        if (medicoesAnimal.get(i).getMedicaoId() == 132523)
+                            comercialAvaliado = true;
                     }
                 }
 
                 //Log.d("Qt Avaliado ",String.valueOf(qtAvaliado));
                 vendaComNota = true;
-                if (!avaliado)
-                    if (qtAvaliado==2 && vendaAvaliado)
-                        vendaComNota = false;
-                        avaliado = true;
+                comercialComNota = true;
+                if (!avaliado){
+                    if (qtAvaliado == 2){
+                        if (vendaAvaliado){
+                            vendaComNota = false;
+                            avaliado = true;
+                        }
+
+                        if (comercialAvaliado){
+                            comercialComNota = false;
+                            avaliado = true;
+                        }
+                    }
+
+                    if (qtAvaliado == 3){
+                        if (comercialAvaliado && vendaAvaliado){
+                            vendaComNota = false;
+                            comercialComNota = false;
+                            avaliado = false;
+                        }
+                    }
+
+                }
+
+                if (comercialAvaliado && vendaAvaliado) {
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Não foi possível salvar, animal não pode ser venda e comercial ao mesmo tempo.")
+                            .positiveText("OK")
+                            .show();
+                    return ;
+                }
 
 
-                if (avaliado && vendaAvaliado && vendaComNota && !animal.isDescarte()){
+
+                if (avaliado && vendaAvaliado && vendaComNota  && !animal.isDescarte()){
                     MaterialDialog dialog = new MaterialDialog.Builder(activity)
                             .title("Mensagem")
                             .content("Não foi possível salvar, animal sem defeito não pode ser vendido.")
@@ -284,6 +319,16 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                             .show();
                     return ;
                 }
+
+                if (avaliado && comercialAvaliado && comercialComNota  && !animal.isDescarte()){
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Não foi possível salvar, animal sem defeito não pode ser comercializado.")
+                            .positiveText("OK")
+                            .show();
+                    return ;
+                }
+
 
                 //Log.d("Medicao ",String.valueOf(medicoesAnimal.get(1).getMedicaoId()));
                 //Log.d("Quantidade ",String.valueOf(medicoesAnimal.size()));
@@ -305,6 +350,7 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
                         String cDate = ((AnimalMainActivity) activity).util.getDateTimeFormatYMD(date);
                         animal.setAvaliado(true);
                         animal.setDataAvaliacao(cDate);
+                        animal.setOrdem_avaliacao(((AnimalMainActivity) activity).ordemAvaliacao);
                         ((AnimalMainActivity) activity).app.getDaoSession().update(animal);
 
                     }
@@ -404,13 +450,13 @@ public class AvaliacaoFragment extends Fragment implements ItemClickListener {
             .setNegativeButton("Cancelar", new InputDialog.ButtonActionListener() {
                 @Override
                 public void onClick(CharSequence inputText) {
-                    // TODO
+
                 }
             })
             .setOnCancelListener(new InputDialog.OnCancelListener() {
                 @Override
                 public void onCancel(CharSequence inputText) {
-                    // TODO
+
                 }
             })
             .interceptButtonAction(new InputDialog.ButtonActionIntercepter() {

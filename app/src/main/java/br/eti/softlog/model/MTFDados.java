@@ -271,8 +271,17 @@ public class MTFDados {
     @Property(nameInDb = "lote")
     String lote;
 
+    @Property(nameInDb = "idf_alterado")
+    int idfAlterado;
+
+    @Property(nameInDb = "ordem_avaliacao")
+    int ordem_avaliacao;
+
     @ToMany(referencedJoinProperty = "animalId")
     List<MotivoDescarteAnimais> motivoDescarteAnimais;
+
+    @Property(nameInDb = "id_mae")
+    int idMae;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -282,7 +291,7 @@ public class MTFDados {
     @Generated(hash = 1637768460)
     private transient MTFDadosDao myDao;
 
-    @Generated(hash = 1806032701)
+    @Generated(hash = 625428377)
     public MTFDados(Long id, Long criadorId, Long proprietarioId, Long animal, Long pai, Long mae,
             String dataNasc, String sexo, String situRepro, String livro, String raNasc, Double rPNasc,
             String raDesm, Double iPDesm, String dPDesm, Double rPDesm, String ra365, Double iP365, String dP365,
@@ -294,7 +303,8 @@ public class MTFDados {
             Double depSob, Double percSob, Double pSob, Double depCE, Double percCE, Double rcCE, Double ce,
             Double dep_musc, Double perc_musc, Double musc, Double indQlt, Double percQlt, Double rank_qlt,
             Long marcacao, Long classificacao, String classificacaoFP, Long mocho, Double p_marcacao,
-            Double ce_marcacao, Long motDescId, String ceip, String lote) {
+            Double ce_marcacao, Long motDescId, String ceip, String lote, int idfAlterado, int ordem_avaliacao,
+            int idMae) {
         this.id = id;
         this.criadorId = criadorId;
         this.proprietarioId = proprietarioId;
@@ -367,6 +377,9 @@ public class MTFDados {
         this.motDescId = motDescId;
         this.ceip = ceip;
         this.lote = lote;
+        this.idfAlterado = idfAlterado;
+        this.ordem_avaliacao = ordem_avaliacao;
+        this.idMae = idMae;
     }
 
     @Generated(hash = 387116617)
@@ -1372,6 +1385,30 @@ public class MTFDados {
 
     public void setLote(String lote) {
         this.lote = lote;
+    }
+
+    public int getIdfAlterado() {
+        return this.idfAlterado;
+    }
+
+    public void setIdfAlterado(int idfAlterado) {
+        this.idfAlterado = idfAlterado;
+    }
+
+    public int getOrdem_avaliacao() {
+        return this.ordem_avaliacao;
+    }
+
+    public void setOrdem_avaliacao(int ordem_avaliacao) {
+        this.ordem_avaliacao = ordem_avaliacao;
+    }
+
+    public int getIdMae() {
+        return this.idMae;
+    }
+
+    public void setIdMae(int idMae) {
+        this.idMae = idMae;
     }
 
     /** called by internal mechanisms, do not call yourself. */

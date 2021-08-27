@@ -80,6 +80,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:src="@mipmap/ic_premium" />
+                        <ImageView
+                            android:id="@+id/img_qsp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:src="@mipmap/ic_qsp" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -99,7 +106,7 @@
 
                         <TextView
                             android:id="@+id/txt_criador"
-                            android:layout_width="match_parent"
+                            android:layout_width="200px"
                             android:layout_height="match_parent"
                             android:paddingHorizontal="16dp"
                             android:paddingTop="4dp"
@@ -117,7 +124,7 @@
 
                         <TextView
                             android:id="@+id/txt_proprietario"
-                            android:layout_width="match_parent"
+                            android:layout_width="200px"
                             android:layout_height="match_parent"
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="4dp"

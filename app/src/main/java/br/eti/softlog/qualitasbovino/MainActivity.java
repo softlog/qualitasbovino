@@ -3,6 +3,7 @@ package br.eti.softlog.qualitasbovino;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -97,6 +98,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         //SqlScoutServer sqlScoutServer = SqlScoutServer.create(this, getPackageName());
+
+
+
+
 
         ButterKnife.bind(this);
         //Prefs.clear();
@@ -249,7 +254,7 @@ public class MainActivity extends AppCompatActivity
                             searchAnimais(true, null);
                         }
 
-                        searchAnimais(true, cAnimal);
+                        searchAnimais(true, ltrim(cAnimal));
 
                     }
 
@@ -675,5 +680,13 @@ public class MainActivity extends AppCompatActivity
         manager.addAllMedicoes();
         invalidateOptionsMenu();
         searchAnimais(reloadView, null);
+    }
+
+    public static String ltrim(String s) {
+        int i = 0;
+        while (i < s.length() &&  s.charAt(i) == '0') {
+            i++;
+        }
+        return s.substring(i);
     }
 }

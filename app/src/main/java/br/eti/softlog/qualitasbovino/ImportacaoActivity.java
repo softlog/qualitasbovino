@@ -26,6 +26,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.eti.softlog.Readers.ReaderCriador;
@@ -44,6 +45,7 @@ public class ImportacaoActivity extends AppCompatActivity {
     private String dirRoot;
     private String nomeBD;
     private DialogProperties properties = new DialogProperties();
+
 
 
     private ProgressBar circularBar;
@@ -107,10 +109,10 @@ public class ImportacaoActivity extends AppCompatActivity {
         File directory = new File(dirDefault);
         File[] files = directory.listFiles();
 
-
         nomeBD = null;
 
         for (int i = 0; i < files.length; i++) {
+
             String filename = files[i].getName();
             String[] partes = filename.split("_");
 

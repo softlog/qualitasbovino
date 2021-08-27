@@ -158,8 +158,6 @@ public class Manager {
         if (motivoDescarte==null) {
 
             motivoDescarte = new MotivoDescarte();
-
-
             motivoDescarte.setId(codigo);
             motivoDescarte.setDescricao(descricao);
             motivoDescarte.setAbrev(descricaoCurta);
@@ -231,7 +229,7 @@ public class Manager {
                                 Double iPDesm, String dPDesm, Double rPDesm, String ra365, Double iP365,
                                 String dP365, Double rP365, String ra450, Double iP450, String dP450,
                                 Double rP450, String ra550, Double iP550, String dP550, Double rP550,
-                                Double iCe, Double rCe, Double aCe, Double iMus, Double rMus) {
+                                Double iCe, Double rCe, Double aCe, Double iMus, Double rMus, int idMae) {
 
 
 
@@ -243,10 +241,21 @@ public class Manager {
         alterar = false;
 
 
-        if (animal > 0)
-            dados = findMTFDadosByIdfCriador(pedigree.getIdf(),codigoToId(criador));
-        else
+        Log.d("Animal Importado",animal.toString());
+        dados = null;
+        if (animal > 0){
+            try{
+                dados = findMTFDadosByIdfCriador(pedigree.getIdf(),codigoToId(criador));
+            } catch (Exception e){
+                //Log.d("Erro", e.getMessage());
+                return dados;
+            }
+
+        }
+        else{
             dados = findMTFDadosByAnimal(animal);
+        }
+
 
         if (!(dados==null) && animal < 0)
             alterar =  true;
@@ -255,8 +264,12 @@ public class Manager {
 
         if (dados==null || alterar) {
 
-            if (!alterar)
+            if (!alterar){
                 dados = new MTFDados();
+                dados.setIdfAlterado(0);
+            } else {
+                dados.setIdfAlterado(1);
+            }
 
             dados.setId(animal);
             dados.setCriadorId(codigoToId(criador));
@@ -298,6 +311,9 @@ public class Manager {
 
             dados.setPrefixIdf(util.getPrefixoIdf(pedigree.getIdf()));
             dados.setCodigoIdf(util.getCodigoIdf(pedigree.getIdf()));
+
+            dados.setIdMae(idMae);
+
 //            String filename = pedigree.getIdf();
 //            String[] partes = filename.split(" ");
 //
@@ -326,7 +342,7 @@ public class Manager {
                                     Double percGPD,Double pGPD, Double depSob, Double percSob,
                                     Double pSob,Double depCE, Double percCE,  Double ce, Double rcCE,
                                     Double depMusc, Double percMusc, Double musc, Double indQlt,
-                                    Double percQlt, Double rankQlt, String ceip) {
+                                    Double percQlt, Double rankQlt, String ceip, int idMae) {
 
         Pedigree pedigree = findPedigreeByAnimal(animal);
         MTFDados dados = findMTFDadosByIdfCriador(pedigree.getIdf(),codigoToId(criador));
@@ -378,8 +394,7 @@ public class Manager {
             dados.setMotDescId(null);
             dados.setMocho(null);
             dados.setClassificacao(null);
-
-
+            dados.setIdMae(idMae);
             app.getDaoSession().insert(dados);
         }
         return dados;
@@ -481,6 +496,7 @@ public class Manager {
             medicao.setDescarte3(descarte3);
             medicao.setDescarte4(descarte4);
             medicao.setObrigatorio(obrigatorio);
+            medicao.setOrdem(ordem);
             app.getDaoSession().update(medicao);
 
         }
@@ -496,7 +512,7 @@ public class Manager {
                 9,1,2,3,9, true);
 
         addMedicao(2,"UBERE","UBE",1,4,"F",
-                0,0,0,0,0,true);
+                0,9,0,0,0,true);
 
         addMedicao(3,"MUSCULOSIDADE","MUS",1,6,"A",
                 0,1,2,3,0,true);
@@ -511,7 +527,7 @@ public class Manager {
                 0,1,0,0,0, false);
 
         addMedicao(7,"OSSATURA","OSS",1,4,"A",
-                0,0,0,0,0, true);
+                0,1,0,0,0, true);
 
         addMedicao(8,"PROFUNDIDADE","PRO",1,5,"A",
                 0,1,2,0,0, true);
@@ -552,7 +568,10 @@ public class Manager {
         addMedicao(19,"VENDA","VEN",0,1,"A",
                 0,0,0,0,0, false);
 
-        addMedicao(20,"LOTE","LOT",0,1,"A",
+        addMedicao(20,"COMERCIAL","COM",0,1,"A",
+                0,0,0,0,0, false);
+
+        addMedicao(21,"LOTE","LOT",0,1,"A",
                 0,0,0,0,0, false);
     }
 
@@ -633,7 +652,7 @@ public class Manager {
                 dataNascimento,sexo,"","","",0.0,"",0.0,
                 "",0.0,"",0.0,"",0.0,"",
                 0.0,"",0.0,"",0.0,"",0.0,0.0,
-                0.0,0.0,0.0,0.0);
+                0.0,0.0,0.0,0.0, 0);
 
         animal.setImportado(0);
         app.getDaoSession().update(animal);
@@ -642,7 +661,7 @@ public class Manager {
     };
 
     public MTFDados editAnimalNovo(Long id, String idf, String nome, String sexo, String dataNascimento,
-                                  String dataRegistro, Long proprietarioId, Long criadorId){
+                                  String dataRegistro, Long proprietarioId, Long criadorId, int alterado){
 
         AnimalNovo animalNovo = app.getDaoSession().getAnimalNovoDao().queryBuilder()
                                     .where(AnimalNovoDao.Properties.Id.eq(id * -1)).unique();
@@ -668,8 +687,9 @@ public class Manager {
                 dataNascimento,sexo,"","","",0.0,"",0.0,
                 "",0.0,"",0.0,"",0.0,"",
                 0.0,"",0.0,"",0.0,"",0.0,0.0,
-                0.0,0.0,0.0,0.0);
+                0.0,0.0,0.0,0.0, 0);
 
+        animal.setIdfAlterado(alterado);
         animal.setImportado(0);
         app.getDaoSession().update(animal);
 

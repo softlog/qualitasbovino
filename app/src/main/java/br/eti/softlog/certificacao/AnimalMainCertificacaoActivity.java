@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,7 +54,7 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
     public Manager manager;
     public Menu menu;
     public boolean isEdit;
-
+    public boolean[] selectedItems;
 
     ActionBar actionBar;
 
@@ -82,6 +83,9 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
 
     @BindView(R.id.imgPremium)
     ImageView imgPremium;
+
+    @BindView(R.id.img_qsp)
+    ImageView imgQsp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +126,12 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
             imgPremium.setVisibility(View.GONE);
         }
 
-
+        if (animal.getIdMae()==1){
+            imgQsp.setVisibility(View.VISIBLE);
+        } else {
+            imgQsp.setVisibility(View.INVISIBLE);
+            imgQsp.setVisibility(View.GONE);
+        }
 
 
             //txt_ceip.setTextColor(Color.RED);
@@ -210,14 +219,16 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
 
     @Override
     public boolean onSupportNavigateUp() {
-        Boolean iniciou;
-        iniciou = false;
+
+        //Desativei por não fazer sentido, sempre é falso.
+        //Boolean iniciou;
+        //siniciou = false;
 
 
-        if (isEdit && iniciou) {
+        if (isEdit) {
             new MaterialDialog.Builder(AnimalMainCertificacaoActivity.this)
                     .title("Mensagem")
-                    .content("Há dados em edição. Favor salvar ou cancelar para poder sair. ")
+                    .content("Há dados em edição. Favor salvar ou cancelar para poder sair.")
                     .positiveText("OK")
                     .show();
             return false;
@@ -232,5 +243,8 @@ public class AnimalMainCertificacaoActivity extends AppCompatActivity implements
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        onSupportNavigateUp();
+    }
 }

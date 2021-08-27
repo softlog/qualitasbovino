@@ -11,7 +11,7 @@ import br.eti.softlog.qualitasbovino.R;
 
 public class AnimalCertificacaoViewHolder extends RecyclerView.ViewHolder {
 
-public TextView txtFazenda;
+public TextView txtMarcacao;
 public TextView txtIdAnimal;
 public TextView txtDataNasc;
 public TextView txtAvaliado;
@@ -19,10 +19,11 @@ public TextView txtSexo;
 public AppCompatButton btn;
 public TextView txtCeip;
 public ImageView imgPremium;
+public ImageView imgQsp;
 
 public AnimalCertificacaoViewHolder(View itemView) {
         super(itemView);
-        this.txtFazenda = itemView.findViewById(R.id.txt_fazenda);
+        this.txtMarcacao = itemView.findViewById(R.id.txt_marcado);
         this.txtIdAnimal = itemView.findViewById(R.id.txt_id_animal);
         this.txtDataNasc = itemView.findViewById(R.id.txt_dt_nasc);
         this.txtAvaliado = itemView.findViewById(R.id.txt_avaliado);
@@ -30,6 +31,7 @@ public AnimalCertificacaoViewHolder(View itemView) {
         this.btn = itemView.findViewById(R.id.btn_acesso);
         this.txtCeip = itemView.findViewById(R.id.txt_classificacao);
         this.imgPremium = itemView.findViewById(R.id.imgPremium);
+        this.imgQsp = itemView.findViewById(R.id.img_qsp);
 
         }
 }

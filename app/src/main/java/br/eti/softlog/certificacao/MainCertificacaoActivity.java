@@ -463,6 +463,8 @@ public class MainCertificacaoActivity extends AppCompatActivity
                         .show();
             } else {
 
+
+
                 MaterialDialog materialDialog = new MaterialDialog.Builder(this)
                         .title("Erro")
                         .content("Ocorreu um erro ao tentar fazer backup do Banco de Dados!")
@@ -556,7 +558,7 @@ public class MainCertificacaoActivity extends AppCompatActivity
             startActivity(in);
             finish();
         } else if (id == R.id.nav_resumo) {
-            Intent in = new Intent(this.getApplicationContext(),ResumoActivity.class);
+            Intent in = new Intent(this.getApplicationContext(),ResumoCertificacaoActivity.class);
             startActivity(in);
         } else if (id == R.id.nav_exportar) {
             Intent in = new Intent(this.getApplicationContext(), ExportacaoCertificacaoActivity.class);

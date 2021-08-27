@@ -55,7 +55,7 @@
                         android:src="@mipmap/ic_logo" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="500dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="16dp"
@@ -63,10 +63,28 @@
 
                         <TextView
                             android:id="@+id/txt_idf"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="IDF: 989824"
                             android:textAppearance="@android:style/TextAppearance.Holo.Large" />
+
+                        <TextView
+                            android:id="@+id/txt_avaliacao_ordem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/img_qsp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:src="@mipmap/ic_qsp" />
                     </LinearLayout>
                 </LinearLayout>
 

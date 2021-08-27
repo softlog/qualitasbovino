@@ -66,7 +66,6 @@ public class AppMain extends Application {
 
         Utils.init(this);
         singleton = this;
-
     }
 
     public SQLiteDatabase getDb(){
@@ -85,13 +84,13 @@ public class AppMain extends Application {
 
         //if (helper.getVersion() == 22 && helper.isUpgrade())
             //updateDadosVersion22();
-
     }
 
     public void updateDadosVersion22() {
 
         List<MTFDados> dados = mDaoSession.getMTFDadosDao().loadAll();
-        for (int i=0;i<dados.size();i++){
+
+        for (int i=0;i<dados.size();i++) {
             String filename = dados.get(i).getIdf();
             String[] partes = filename.split(" ");
             Log.d("Atualizando Idf",dados.get(i).getIdf());
@@ -127,7 +126,6 @@ public class AppMain extends Application {
             InputStream in = new FileInputStream(
                     new File(String.valueOf(context.getDatabasePath(nome_bd + ".db"))));
 
-
             // Caminho de Destino do Backup do Seu Banco de Dados
             OutputStream out = new FileOutputStream(new File(
                     dirBackup + "/" + nome_bd + "_" + cDate + ".db"));
@@ -159,7 +157,6 @@ public class AppMain extends Application {
             // Caminho de Destino do Backup do Seu Banco de Dados
             OutputStream out = new FileOutputStream(new File(
                     "/data/data/br.eti.softlog.qualitasbovino/databases/" + nome_bd + ".db"));
-
 
             byte[] buf = new byte[1024];
             int len;

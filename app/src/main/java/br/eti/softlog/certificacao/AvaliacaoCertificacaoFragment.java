@@ -1,11 +1,13 @@
 package br.eti.softlog.certificacao;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.omega_r.libs.OmegaCenterIconButton;
 import com.pixplicity.easyprefs.library.Prefs;
@@ -43,6 +46,7 @@ import br.eti.softlog.model.MTFDados;
 import br.eti.softlog.model.MedicoesAnimal;
 import br.eti.softlog.model.MotivoDescarte;
 import br.eti.softlog.model.MotivoDescarteAnimais;
+import br.eti.softlog.model.MotivoDescarteAnimaisDao;
 import br.eti.softlog.model.MotivoDescarteDao;
 import br.eti.softlog.qualitasbovino.AvaliacaoAdapter;
 import br.eti.softlog.qualitasbovino.ItemClickListener;
@@ -81,7 +85,7 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
     private Unbinder unbinder;
 
     public boolean avaliado;
-
+    boolean sair;
     public Activity activity;
     //private OnFragmentInteractionListener mListener;
 
@@ -114,7 +118,6 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
     @BindView(R.id.txt_classificacao_p)
     TextView txtClassificacaoP;
 
-
     @BindView(R.id.et_peso)
     EditText etPeso;
 
@@ -127,7 +130,7 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
     @BindView(R.id.spnMotivo)
     MultiSpinner spnMotivo;
 
-
+    MaterialDialog.Builder dialogBuilder;
 
     private OnFragmentInteractionListener mListener;
 
@@ -175,13 +178,18 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
         btnCancelar = view.findViewById(R.id.btn_cancelar);
 
         //Se animal não está avaliado, abrir para avaliação
-        if (!animal.getAvaliado()) {
-            ((AnimalMainCertificacaoActivity) activity).isEdit = true;
-            Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
-        } else {
-            ((AnimalMainCertificacaoActivity) activity).isEdit = false;
-            Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
+        if (!(((AnimalMainCertificacaoActivity) activity).isEdit)){
+            if (!animal.getAvaliado()) {
+                ((AnimalMainCertificacaoActivity) activity).isEdit = true;
+                Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
+            } else {
+                ((AnimalMainCertificacaoActivity) activity).isEdit = false;
+                Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
+            }
         }
+
+
+
 
         //Definir conteudo dos controles
         this.resetClassificacao();
@@ -624,25 +632,27 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
 
 
         spnMotivo.setAdapter(adapter, false, onSelectedListener);
-        boolean[] selectedItems = new boolean[adapter.getCount()];
 
-        if (animal.getMotivoDescarteAnimais() != null){
-            for (int i = 0; i < animal.getMotivoDescarteAnimais().size();i++){
-                String motivo = animal.getMotivoDescarteAnimais().get(i).getMotivoDescarte().getDescricao();
-                for (int j = 0; j < adapter.getCount(); j++) {
-                    if (adapter.getItem(j).equals(motivo)){
-                        selectedItems[j] = true;
+        if (((AnimalMainCertificacaoActivity) activity).selectedItems == null){
+            ((AnimalMainCertificacaoActivity) activity).selectedItems = new boolean[adapter.getCount()];
+
+            if (animal.getMotivoDescarteAnimais() != null){
+                for (int i = 0; i < animal.getMotivoDescarteAnimais().size();i++) {
+                    String motivo = animal.getMotivoDescarteAnimais().get(i).getMotivoDescarte().getDescricao();
+                    for (int j = 0; j < adapter.getCount(); j++) {
+                        if (adapter.getItem(j).equals(motivo)){
+                            ((AnimalMainCertificacaoActivity) activity).selectedItems[j] = true;
+                        }
+                        //spnMotivo.setSelectedIndex(i);
                     }
-                    //spnMotivo.setSelectedIndex(i);
                 }
             }
         }
 
-
         spnMotivo.setTextSize(16);
         spnMotivo.setPadding(8,16,8,16);
 
-        spnMotivo.setSelected(selectedItems);
+        spnMotivo.setSelected(((AnimalMainCertificacaoActivity) activity).selectedItems);
 
 
 
@@ -760,7 +770,9 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
                 boolean descartado;
                 boolean temMotivoDescarte;
                 boolean temCe;
+                boolean avisaCe;
 
+                avisaCe = false;
                 temClassificacao = false;
                 if (animal.getClassificacao() != null) {
                     if (animal.getClassificacao() > 0)
@@ -811,23 +823,50 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
                 for (int i=0;i<motivos.length; i++){
                     if(motivos[i]){
                         Long idMotivo = motivoDescartes.get(i).getId();
-                        MotivoDescarteAnimais motivoDescarte = new MotivoDescarteAnimais();
-                        motivoDescarte.setAnimalId(animal.getId());
-                        motivoDescarte.setMotivoId(idMotivo);
-                        ((AnimalMainCertificacaoActivity) activity).app.getDaoSession()
-                                .getMotivoDescarteAnimaisDao()
-                                .insert(motivoDescarte);
+                        MotivoDescarteAnimais motivoDescarte = ((AnimalMainCertificacaoActivity) activity).app.getDaoSession()
+                                .getMotivoDescarteAnimaisDao().queryBuilder()
+                                .where(MotivoDescarteAnimaisDao.Properties.AnimalId.eq(animal.getId()))
+                                .where(MotivoDescarteAnimaisDao.Properties.MotivoId.eq(idMotivo))
+                                .unique();
+
+                        if (motivoDescarte == null) {
+
+                            motivoDescarte = new MotivoDescarteAnimais();
+
+                            motivoDescarte.setAnimalId(animal.getId());
+                            motivoDescarte.setMotivoId(idMotivo);
+                            ((AnimalMainCertificacaoActivity) activity).app.getDaoSession()
+                                    .getMotivoDescarteAnimaisDao()
+                                    .insert(motivoDescarte);
+                        }
+
                         temMotivoDescarte = true;
                     }
                 }
 
-
+                final boolean alterar;
+                alterar = true;
                 String cCe = etCe.getText().toString();
                 temCe = false;
                 if (!cCe.equals("")) {
-                    animal.setCe_marcacao(Double.valueOf(cCe));
+                    double dCCe = Double.valueOf(cCe);
+
+
+                    if (dCCe < 10.0) {
+                        MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                                .title("Mensagem")
+                                .content("Não foi possível salvar, CE com valor não permitido!")
+                                .positiveText("OK")
+                                .show();
+                        return;
+                    }
+
+                    animal.setCe_marcacao(dCCe);
                     temCe = true;
+
+
                 }
+
 
                 String cPCe = etPeso.getText().toString();
 
@@ -865,6 +904,15 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
                     }
                 }
 
+                if (animal.getSexo().equals("F") && !temMarcacao){
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Não foi possível salvar, certificação não está completa!")
+                            .positiveText("OK")
+                            .show();
+                    return;
+                }
+
                 if (descartado && !temMotivoDescarte) {
                     MaterialDialog dialog = new MaterialDialog.Builder(activity)
                             .title("Mensagem")
@@ -879,33 +927,94 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
                     avaliado = true;
                 }
 
+                if (animal.getSexo().equals("M") && temMarcacao && !temCe && !descartado){
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Não foi possível salvar, animal macho com marcação precisa do CE!")
+                            .positiveText("OK")
+                            .show();
 
-                if (!descartado && temCe)
-                    avaliado = true;
+                    return;
 
-                if (avaliado) {
-                    Date date = new Date();
-                    String cDate = ((AnimalMainCertificacaoActivity) activity).util.getDateTimeFormatYMD(date);
-                    animal.setAvaliado(true);
-                    animal.setDataAvaliacao(cDate);
-                    ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
-
-                } else {
-                    ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
                 }
 
-                MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                        .title("Mensagem")
-                        .content("Os dados foram gravados com sucesso!")
-                        .positiveText("Ok")
-                        .autoDismiss(true)
-                        .show();
 
-                ((AnimalMainCertificacaoActivity) activity).isEdit = false;
-                Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
-                configBtn();
 
-                ((AnimalMainCertificacaoActivity) activity).onSupportNavigateUp();
+                if (!descartado && temCe && animal.getSexo().equals("M"))
+                    avaliado = true;
+
+                if (!descartado && animal.getSexo().equals("F"))
+                    avaliado = true;
+
+
+                if (!descartado && temCe && animal.getSexo().equals("M") && !temMarcacao){
+                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                            .title("Mensagem")
+                            .content("Marcação não foi informada, salvar mesmo assim?")
+                            .positiveText("Sim")
+                            .negativeText("Não")
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    dialog.dismiss();
+                                    return ;
+                                }
+                            })
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                    if (avaliado) {
+                                        Date date = new Date();
+                                        String cDate = ((AnimalMainCertificacaoActivity) activity).util.getDateTimeFormatYMD(date);
+                                        animal.setAvaliado(true);
+                                        animal.setDataAvaliacao(cDate);
+                                        ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
+
+                                    } else {
+                                        ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
+                                    }
+
+                                    MaterialDialog dialog2 = new MaterialDialog.Builder(getActivity())
+                                            .title("Mensagem")
+                                            .content("Dados gravados com sucesso.")
+                                            //.autoDismiss(true)
+                                            .show();
+
+
+                                    ((AnimalMainCertificacaoActivity) activity).isEdit = false;
+                                    Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
+                                    configBtn();
+
+                                    ((AnimalMainCertificacaoActivity) activity).onSupportNavigateUp();
+                                }
+                            })
+                            .show();
+
+                } else {
+                    if (avaliado) {
+                        Date date = new Date();
+                        String cDate = ((AnimalMainCertificacaoActivity) activity).util.getDateTimeFormatYMD(date);
+                        animal.setAvaliado(true);
+                        animal.setDataAvaliacao(cDate);
+                        ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
+
+                    } else {
+                        ((AnimalMainCertificacaoActivity) activity).app.getDaoSession().update(animal);
+                    }
+
+                    MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                            .title("Mensagem")
+                            .content("Dados gravados com sucesso.")
+                            //.autoDismiss(true)
+                            .show();
+
+
+                    ((AnimalMainCertificacaoActivity) activity).isEdit = false;
+                    Prefs.putBoolean("isEdit", ((AnimalMainCertificacaoActivity) activity).isEdit);
+                    configBtn();
+
+                    ((AnimalMainCertificacaoActivity) activity).onSupportNavigateUp();
+                }
             }
         });
         return view;
@@ -1060,15 +1169,15 @@ public class AvaliacaoCertificacaoFragment extends Fragment implements ItemClick
         ((AnimalMainCertificacaoActivity) activity).app.getDaoSession()
                 .getMTFDadosDao()
                 .update(animal);
-
     }
-
 
 
     private MultiSpinner.MultiSpinnerListener onSelectedListener = new MultiSpinner.MultiSpinnerListener() {
 
         public void onItemsSelected(boolean[] selected) {
             // Do something here with the selected items
+
+            ((AnimalMainCertificacaoActivity) activity).selectedItems = selected;
 
             StringBuilder builder = new StringBuilder();
             boolean temMotivo;

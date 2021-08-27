@@ -231,11 +231,13 @@ public class ReaderXLSCert {
             Long idAnimal = Long.valueOf(cIdAnimalStr);
             Log.d("Gravando Animal", idf);
 
+            String cIdMaeStr = row1[25].getContents();
+            int idMae = Integer.valueOf(cIdMaeStr);
+
+
             MTFDados animal = manager.addMTFDadosCert(codigoCriador,codigoCriador,idAnimal,pNasc,
                     dataNasc,sexo,percNasc,depNasc,depDesm,percDesm,pDesm, depGPD,percGPD,pGPD,depSob,
-                    percSob,pSob,depCE,percCE,ce,iCE,depMusc,percMusc,musc,indQlt,percQlt,rankQlt,cCeip);
-
-
+                    percSob,pSob,depCE,percCE,ce,iCE,depMusc,percMusc,musc,indQlt,percQlt,rankQlt,cCeip, idMae);
 
             i = i + 2;
         }

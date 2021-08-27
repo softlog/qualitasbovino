@@ -39,7 +39,7 @@ public class ObservacaoFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static ObservacaoFragment newInstance() {
         ObservacaoFragment fragment = new ObservacaoFragment();
         Bundle args = new Bundle();
